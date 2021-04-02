@@ -8,6 +8,7 @@ CREATE TABLE user (
   age INT NOT NULL,
   userName VARCHAR(30),
   password VARCHAR(30),
+  address varchar(255),
   status BOOLEAN DEFAULT TRUE
 );
 CREATE TABLE country (
@@ -50,6 +51,22 @@ CREATE TABLE product (
   PRIMARY KEY (id),
   FOREIGN KEY (userId) REFERENCES user(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+Create table image (
+	id bigint primary key null auto_increment,
+    image text
+    );
+
+Create table product_image(
+	id int not null auto_increment primary key,
+    id_product bigint not null,
+    id_image bigint not null,
+    Foreign key (id_product) references product(id) on delete cascade on update cascade,
+     Foreign key (id_image) references image(id) on delete cascade on update cascade
+    );
+    
+
+
 CREATE TABLE category (
   id BIGINT NOT NULL AUTO_INCREMENT,
   parentId BIGINT NULL DEFAULT NULL,
@@ -90,3 +107,4 @@ CREATE TABLE cart_item (
  FOREIGN KEY (productId) REFERENCES product (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (cartId) REFERENCES cart (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
