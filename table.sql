@@ -4,6 +4,7 @@ CREATE TABLE user (
   id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30),
   phone VARCHAR(12),
+  email varchar(255),
   job_title VARCHAR(30),
   age INT NOT NULL,
   userName VARCHAR(30),
