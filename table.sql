@@ -4,8 +4,8 @@ CREATE TABLE user (
   id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30),
   phone VARCHAR(12),
-  email varchar(255),
   job_title VARCHAR(30),
+  email varchar(255) ,
   age INT NOT NULL,
   userName VARCHAR(30),
   password VARCHAR(30),
@@ -62,6 +62,7 @@ Create table product_image(
 	id int not null auto_increment primary key,
     id_product bigint not null,
     id_image bigint not null,
+    unique (id_product,id_image),
     Foreign key (id_product) references product(id) on delete cascade on update cascade,
      Foreign key (id_image) references image(id) on delete cascade on update cascade
     );
@@ -108,4 +109,10 @@ CREATE TABLE cart_item (
  FOREIGN KEY (productId) REFERENCES product (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (cartId) REFERENCES cart (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+
+CREATE VIEW product_view AS SELECT product.title, product.price,product.discount, product.quantity,product.type, product.content, image.image
+FROM ((product 
+inner join  product_image on product_image.id_product= product.id)
+inner join  image on image.id= product_image.id_image);
 
