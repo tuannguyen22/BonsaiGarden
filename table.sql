@@ -1,5 +1,5 @@
-create database  if not exists shop;
-use shop;
+create database  if not exists bonsaiGarden
+use bonsaiGarden
 CREATE TABLE user (
   id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30),
