@@ -45,32 +45,32 @@
 									<div class="slides_container">
 										<a href="#" target="_blank"><img src="images/productslide-1.jpg" alt=" " />
 										
-										<?php
-											$sql = "select image from product_view where id = '$id'";
-											$result=	$connect->query($sql);
-										if(!$result){
-											echo "Die".$connect->error;
-											exit();
-										}
-											while($row=$connect->fetchArray()){
-												echo "<a href='#' target='_blank'><img src='{$row['image']}' alt='' /></a>";												
-											}
+										 <?php
+										// 	$sql = "select image from product_view where id = '$id'";
+										// 	$result=	$connect->query($sql);
+										// if(!$result){
+										// 	echo "Die".$connect->error;
+										// 	exit();
+										// }
+										// 	while($row=$connect->fetchArray()){
+										// 		echo "<a href='#' target='_blank'><img src='{$row['image']}' alt='' /></a>";												
+										// 	}
 
 
-										?>								
+										?>								 
 									</div>
 									<ul class="pagination">
 											
 									<?php
-											$sql = "select image from product_view where id = '$id'";
-											$result=	$connect->query($sql);
-										if(!$result){
-											echo "Die".$connect->error;
-											exit();
-										}
-											while($row=$connect->fetchArray()){
-												echo "<a href='#' target='_blank'><img src='{$row['image']}' alt='' /></a>";												
-											}
+										// 	$sql = "select image from product_view where id = '$id'";
+										// 	$result=	$connect->query($sql);
+										// if(!$result){
+										// 	echo "Die".$connect->error;
+										// 	exit();
+										// }
+										// 	while($row=$connect->fetchArray()){
+										// 		echo "<a href='#' target='_blank'><img src='{$row['image']}' alt='' /></a>";												
+										// 	}
 
 
 											?>	
@@ -89,20 +89,20 @@
 					
 							
 							<?php
-											$sql = "select name from product where id = '$id'";
-											$result=	$connect->query($sql);
-										if(!$result){
-											echo "Die".$connect->error;
-											exit();
-										}
-										$row=$connect->fetchArray();
-											if(empty($row)){
-												echo  	"<h2>Ten cua san pham {$row['name']} </h2>";
-												echo "<p>title cua san pham {$row['subtitle']}</p>";
-												echo "<div class='price'>
-												<p>Gia: <span>$500{$row['price']} </span></p>
-														</div>";
-											}
+										// 	$sql = "select name from product where id = '$id'";
+										// 	$result=	$connect->query($sql);
+										// if(!$result){
+										// 	echo "Die".$connect->error;
+										// 	exit();
+										// }
+										// $row=$connect->fetchArray();
+										// 	if(empty($row)){
+										// 		echo  	"<h2>Ten cua san pham {$row['name']} </h2>";
+										// 		echo "<p>title cua san pham {$row['subtitle']}</p>";
+										// 		echo "<div class='price'>
+										// 		<p>Gia: <span>$500{$row['price']} </span></p>
+										// 				</div>";
+										// 	}
 										
 											
 

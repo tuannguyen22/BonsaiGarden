@@ -10,7 +10,8 @@ CREATE TABLE user (
   userName VARCHAR(30),
   password VARCHAR(30),
   address varchar(255),
-  status BOOLEAN DEFAULT TRUE
+  status BOOLEAN DEFAULT TRUE,
+  unique(userName)
 );
 CREATE TABLE country (
   country_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -109,4 +110,6 @@ CREATE VIEW product_view AS SELECT  product.name,product.subtitle, product.price
 FROM ((product 
 inner join  product_image on product_image.id_product= product.id)
 inner join  image on image.id= product_image.id_image);
+
+
 
