@@ -41,16 +41,15 @@ CREATE TABLE address (
 
 CREATE TABLE product (
   id BIGINT NOT NULL AUTO_INCREMENT,
-  userId BIGINT NOT NULL,
-  title VARCHAR(75) NOT NULL,
+  name varchar(255) ,
+  subtitle VARCHAR(75) NOT NULL,
   summary TINYTEXT NULL,
   type SMALLINT(6) NOT NULL DEFAULT 0,
   price FLOAT NOT NULL DEFAULT 0,
   discount FLOAT NOT NULL DEFAULT 0,
   quantity SMALLINT(6) NOT NULL DEFAULT 0,
   content TEXT NULL DEFAULT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (userId) REFERENCES user(id) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (id)
 );
 
 Create table image (
@@ -106,7 +105,7 @@ CREATE TABLE cart_item (
 );
 
 
-CREATE VIEW product_view AS SELECT product.title, product.price,product.discount, product.quantity,product.type, product.content, image.image
+CREATE VIEW product_view AS SELECT  product.name,product.subtitle, product.price,product.discount, product.quantity,product.type, product.content, image.image
 FROM ((product 
 inner join  product_image on product_image.id_product= product.id)
 inner join  image on image.id= product_image.id_image);
