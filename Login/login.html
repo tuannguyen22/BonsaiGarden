@@ -4,9 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style_login.css">
     <meta charset="UTF-8">
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="Data_login.js"></script>
-    <script src="input_user.js"></script>
     <link rel="stylesheet" href="../Home/base.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" href=https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css>
@@ -25,25 +22,27 @@
         <!-- Tạo tài khoản -->
         <div class="form-container sign-up-container">
             <div class="form">
-                <h1>Create Account</h1>
-                <p></p>
-                <div class="form-group">
-                    <label for="username">User Name:</label>
-                    <input type="text" class="form-control" id="newUsername" placeholder="User name" name="name">
-                </div>
-                <div class="form-group">
-                    <label for="newemail">Email:</label>
-                    <input type="text" class="form-control" id="newEmail" placeholder="Email" name="newemail">
-                </div>
-                <div class="form-group">
-                    <label for="newpwd">Password:</label>
-                    <input type="password" class="form-control" id="newPassword" placeholder="Password" name="newPassword">
-                </div>
-                <div class="form-group">
-                    <label for="pwdd">Confirm Password:</label>
-                    <input type="password" class="form-control" id="rePassword" placeholder="Confirm password" name="rePassword">
-                </div>
-                <button class="btn btn-default" id="window1" data-toggle="modal" data-target="#exModal">Registration</button>
+                <form action="Registration.php" method="post">
+                    <h1>Create Account</h1>
+                    <p></p>
+                    <div class="form-group">
+                        <label for="username">User Name:</label>
+                        <input type="text" class="form-control" id="newUsername" placeholder="User name" name="newName">
+                    </div>
+                    <div class="form-group">
+                        <label for="newemail">Email:</label>
+                        <input type="text" class="form-control" id="newEmail" placeholder="Email" name="newEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="newpwd">Password:</label>
+                        <input type="password" class="form-control" id="newemail" placeholder="Password" name="newPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwdd">Confirm Password:</label>
+                        <input type="password" class="form-control" id="rePassword" placeholder="Confirm password" name="rePassword">
+                    </div>
+                    <button class="btn btn-default" name="signUp" id="window1">Registration</button>
+                </form>
             </div>
         </div>
 
@@ -51,54 +50,22 @@
         <!-- Đăng nhập -->
         <div class="form-container sign-in-container">
             <div class="form">
-                <h1>Login</h1>
-                <p></p>
-                <div class="form-group">
-                    <label for="userName">User Name:</label>
-                    <input type="username" class="form-control" id="username" placeholder="User name" name="name">
-                </div>
-                <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-                </div>
-                <div class="checkbox">
-                    <a href="">Forgot Password</a>
-                </div>
-                <button type="submit" class="btn btn-default" id="login-acc">Login</button>
-            </div>
-        </div>
-        <!-- Modal input data profile -->
-        <div class="modal fade" id="exModal" tabindex="-1" role="dialog" aria-labelledby="exModal" aria-hidden="true">
-            <div class="modal-dialog ">
-                <div class="modal-content" id="content-modal-input">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exModalLabel"> Add Personal iInformation</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <form action="login.php" method="post">
+                    <h1>Login</h1>
+                    <p></p>
+                    <div class="form-group">
+                        <label for="userName">User Name:</label>
+                        <input type="username" class="form-control" id="username" placeholder="User name" name="name">
                     </div>
-                    <div class="modal-body">
-                        <form action="" class="form-row">
-                            <div class="col-12 mt-3">
-                                <label for="name">Full Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Full name">
-                            </div>
-                            <div class="col-12 mt-3">
-                                <label for="age">Age</label>
-                                <input type="number" id="age" class="form-control" placeholder="Age">
-                            </div>
-                            <div class="col-12 mt-3">
-                                <label for="">Your Phone</label>
-                                <input type="text" id="phones" class="form-control" placeholder="Phone">
-                            </div>
-                            <div class="col-12 mt-3">
-                                <label for="">Your Job</label>
-                                <input type="text" id="job" class="form-control" placeholder="Job">
-                            </div>
-                        </form>
-                        <button class="btn btn-outline-danger" id="button-info"> Completed</button>
+                    <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                     </div>
-                </div>
+                    <div class="checkbox">
+                        <a href="">Forgot Password</a>
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-default" id="login-acc">Login</button>
+                </form>
             </div>
         </div>
         <div class="overlay-container">

@@ -1,13 +1,15 @@
-create database  if not exists shop;
-use shop;
+create database  if not exists bonsaiGarden
+use bonsaiGarden
 CREATE TABLE user (
   id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30),
   phone VARCHAR(12),
   job_title VARCHAR(30),
+  email varchar(255) ,
   age INT NOT NULL,
   userName VARCHAR(30),
   password VARCHAR(30),
+  address varchar(255),
   status BOOLEAN DEFAULT TRUE
 );
 CREATE TABLE country (
@@ -50,6 +52,23 @@ CREATE TABLE product (
   PRIMARY KEY (id),
   FOREIGN KEY (userId) REFERENCES user(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+Create table image (
+	id bigint primary key null auto_increment,
+    image text
+    );
+
+Create table product_image(
+	id int not null auto_increment primary key,
+    id_product bigint not null,
+    id_image bigint not null,
+    unique (id_product,id_image),
+    Foreign key (id_product) references product(id) on delete cascade on update cascade,
+     Foreign key (id_image) references image(id) on delete cascade on update cascade
+    );
+    
+
+
 CREATE TABLE category (
   id BIGINT NOT NULL AUTO_INCREMENT,
   parentId BIGINT NULL DEFAULT NULL,
@@ -68,11 +87,6 @@ CREATE TABLE cart (
   id BIGINT NOT NULL AUTO_INCREMENT,
   userId BIGINT NULL DEFAULT NULL,
   status SMALLINT(6) NOT NULL DEFAULT 0,
-	name VARCHAR(50) NULL DEFAULT NULL,
-  email VARCHAR(50) NULL,
-  city VARCHAR(50) NULL DEFAULT NULL,
-  province VARCHAR(50) NULL DEFAULT NULL,
-  country VARCHAR(50) NULL DEFAULT NULL,
   content TEXT NULL DEFAULT NULL,
   PRIMARY KEY (id),
    FOREIGN KEY (userId) REFERENCES user (id) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -90,3 +104,9 @@ CREATE TABLE cart_item (
  FOREIGN KEY (productId) REFERENCES product (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (cartId) REFERENCES cart (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+
+CREATE VIEW product_view AS SELECT product.title, product.price,product.discount, product.quantity,product.type, product.content, image.image
+FROM ((product 
+inner join  product_image on product_image.id_product= product.id)
+inner join  image on image.id= product_image.id_image);

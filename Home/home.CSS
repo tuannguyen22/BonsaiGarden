@@ -412,6 +412,7 @@ figure:hover+span {
 #btn-img {
     color: black !important;
     border: black !important;
+    background-color: #489921 !important;
 }
 
 #btn-img:hover {
@@ -664,9 +665,6 @@ figure.snip0057.hover:before {
 }
 
 
-/* Section */
-
-
 /* Responsive */
 
 
@@ -795,7 +793,7 @@ figure.snip0057.hover:before {
     }
 }
 
-@media only screen and (min-width: 89.1em) and (max-width: 1441px) {
+@media only screen and (min-width: 89.1em) and (max-width: 2559px) {
     .logo {
         width: 20%;
     }
