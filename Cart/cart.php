@@ -1,53 +1,82 @@
 <html>
 
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="cart.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="cart.css">
 </head>
 
 <body>
-<?php include('../Database/connect.php')?>;
-  <nav class="navbar navbar-expand-md">
-      <div class="container">
-          <a class="navbar-brand" href="../Home/home.html"><img src="../Home/Image/logo.jpg" width="100px" height="100px"></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
+  <?php
+  include('../Database/connect.php');
+  function addCart()
+  {
+    if ($_REQUEST['id']) {
+      $id = $_REQUEST['id'];
+      $read = "SELECT * FROM cart WHERE userId = '{$_SESSION['userId']}'"; 
+      global $conn;
+      $idCart = $conn->query($read);
+      if (mysqli_num_rows($idCart) > 0) {
+        while($row = mysqli_fetch_assoc($idCart)) {
+          $cart = $row['id'];
+        }
+      }
+      $read = "SELECT * FROM product WHERE id=" . $id; 
+      global $conn;
+      $product = $conn->query($read);
+      if (mysqli_num_rows($product) > 0) {
+        while($row = mysqli_fetch_assoc($product)) {
+          $insert = "INSERT INTO cart (userId,email)
+          VALUES ('{$row['id']}','{$row['email']}') ";
 
-          <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
-              <ul class="navbar-nav m-auto">
-                <li class="nav-item">
-                  <a class="nav-link active" href="../Home/home.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Notification</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">My account</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Purchase menu</a>
-                </li>
-              </ul>
-              
-              <form class="form-inline my-4 my-lg-0">
-                  <div class="input-group input-group-sm">
-                      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
-                      <div class="input-group-append">
-                          <button type="button" class="btn btn-secondary btn-number">
-                              <i class="fa fa-search"></i>
-                          </button>
-                      </div>
-                  </div>
-              </form>
+        }
+      }
+
+    }
+  }
+
+
+  ?>;
+  <nav class="navbar navbar-expand-md">
+    <div class="container">
+      <a class="navbar-brand" href="../Home/home.html"><img src="../Home/Image/logo.jpg" width="100px" height="100px"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+        <ul class="navbar-nav m-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="../Home/home.php">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Notification</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">My account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Purchase menu</a>
+          </li>
+        </ul>
+
+        <form class="form-inline my-4 my-lg-0">
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-secondary btn-number">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
           </div>
+        </form>
       </div>
+    </div>
   </nav>
 
-    <!-- <section class="jumbotron text-center">
+  <!-- <section class="jumbotron text-center">
         <div class="container">
             <div class="jumbotron-heading">
               <img src="../Home/Image/back-cart.jpg" width="100%" height="400rem">
@@ -55,7 +84,7 @@
         </div>
     </section> -->
 
-    <div class="pb-5">
+  <div class="pb-5">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
@@ -125,7 +154,8 @@
           <div class="p-4">
             <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
             <ul class="list-unstyled mb-4">
-              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
               <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
                 <h5 class="font-weight-bold">$400.00</h5>
               </li>
@@ -135,25 +165,25 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
 
 
-                        <?php
-                    // $read = "SELECT * FROM product ORDER BY id"; 
-                    // $result = mysqli_query($conn, $read);
-                    // if (mysqli_num_rows($result) > 0) {
-                    //     while($row = mysqli_fetch_assoc($result)) {
-                    //         echo "<tr>";
-                    //         echo "<td>" . $row['id'] . "</td>";
-                    //         echo "<td>" . $row['nameProd'] . "</td>";
-                    //         echo "<td>"."<img src ='{$row['img']}' width = 100px; height=150px>"."</td>";
-                    //         echo "<td>" . $row['price'] . "</td>";
-                    //         echo "<td><button class = 'btn btn-outline-danger' data-toggle='modal' data-target='#update'><i class='fas fa-cogs'></i></button>";
-                    //         echo "<button onclick='deleteProd('{$row['id']}')' class = 'btn m1-1 btn-outline-warning'> <i class='fas fa-trash'></i></button></td>";
-                    //         echo "</tr>";
-                    //     }
-                    // }
-                    ?>
+  <?php
+  // $read = "SELECT * FROM product ORDER BY id"; 
+  // $result = mysqli_query($conn, $read);
+  // if (mysqli_num_rows($result) > 0) {
+  //     while($row = mysqli_fetch_assoc($result)) {
+  //         echo "<tr>";
+  //         echo "<td>" . $row['id'] . "</td>";
+  //         echo "<td>" . $row['nameProd'] . "</td>";
+  //         echo "<td>"."<img src ='{$row['img']}' width = 100px; height=150px>"."</td>";
+  //         echo "<td>" . $row['price'] . "</td>";
+  //         echo "<td><button class = 'btn btn-outline-danger' data-toggle='modal' data-target='#update'><i class='fas fa-cogs'></i></button>";
+  //         echo "<button onclick='deleteProd('{$row['id']}')' class = 'btn m1-1 btn-outline-warning'> <i class='fas fa-trash'></i></button></td>";
+  //         echo "</tr>";
+  //     }
+  // }
+  ?>
 </body>
 
 </html>

@@ -32,7 +32,7 @@
                 <div class="menu">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="./home.html">Home</a>
+                            <a class="nav-link active" href="./home.php">Home</a>
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
@@ -52,14 +52,14 @@
                         <li class="nav-item">
                             <div class="dropdown">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                    ACCOUNT
+                                <?php echo strtoupper($_COOKIE['user'])?>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">My Account</a>
+                                    <a class="dropdown-item" href="">My Account</a>
                                     <a class="dropdown-item" href="../cart/cart.php">Cart Shoping</a>
                                     <a class="dropdown-item" href="#">Purchase Menu</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="../Login/login.html">Logout</a>
+                                    <a class="dropdown-item" href="../Login/logout.php">Logout</a>
                                 </div>
                             </div>
                         </li>
