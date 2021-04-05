@@ -112,3 +112,24 @@ inner join  image on image.id= product_image.id_image);
 
 
 
+
+
+insert into user(name,phone,job_title,email,age,userName,password,address) values('long','099999999','IT','longnguyen22',10,'admin','123456','Quang Binh');
+insert into user(name,phone,job_title,email,age,userName,password,address) values('long2','099999999','IT','longnguyen22',10,'admin2','123456','Quang Binh');
+
+insert into product(name,subtitle,summary,type,price,discount,quantity,content) values('sp1','Ban gi day','San pham nay dung de','L',20000,20.5,5,'Chuc nang san pham nay dung de');
+
+insert into image (image) values('/img/link.jpg');
+insert into image (image) values('/img/link2.jpg');
+insert into image (image) values('/img/link3.jpg');
+
+insert into product_image(id_product,id_image) values(1,1);
+insert into product_image(id_product,id_image) values(1,2);
+insert into product_image(id_product,id_image) values(1,3);
+
+insert into cart(userId,content) values(1,"Nguoi dung1");
+
+insert into cart_item(productId,cartId) values(1,1);
+
+
+
