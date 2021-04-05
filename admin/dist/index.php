@@ -202,9 +202,9 @@ if($_SESSION['login']=="false"){
         const button = document.getElementById('user_table');
         button.addEventListener('click', async () => {
             try {
-                await axios.get('tables.php/user/').then(response => {
-                    let table = document.getElementById('dashboard');
-                    table.innerHTML =   response.data;;
+                await axios.get('tables.php?user').then(response => {
+                   document.getElementById('dashboard').innerHTML =   response.data;
+                
                     $('#dataTable').DataTable();
                 });
 
@@ -215,7 +215,7 @@ if($_SESSION['login']=="false"){
         const button2 = document.getElementById('product_table');
         button2.addEventListener('click', async () => {
             try {
-                await axios.get('tables.php?product').then(response => {
+                await axios.get('tables.php?product=1').then(response => {
                     let table = document.getElementById('dashboard');
                     table.innerHTML =   response.data;;
                     $('#dataTable').DataTable();          

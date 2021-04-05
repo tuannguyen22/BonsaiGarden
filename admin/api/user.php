@@ -6,28 +6,31 @@ require '../db/connect.php';
 require 'restful_api.php';
 
 class User extends restful_api {
-    protected $connection;
+	
 	function __construct(){
 		parent::__construct();
-        $this->connection= new Database();
-
+     
 	}
 
 	function user(){
 		if ($this->method == 'GET'){
-			
+
+
+			$con= new mysqli('localhost','root','','bonsaigarden');
 			if(empty($this->params))
 			{
-				$this->connection->query("select * from user");
+				$result=	$con->query("SELECT * FROM `user`");
 			}
 			else{
+				print_r($this->params);
 					$id=array_pop(explode('=',$this->params));
-					$this->connection->connection->query("select * from user where id='$id' LIMIT 1");
+
+					$result=	$con->query("select * from user where id='$id'");
 
 			}	
 		
 			$data = array();
-			while($row =$this->connection->fetchArray()){
+			while($row =$result->fetch_assoc()){
 				$data[] = $row;
 			}
 			$this->response(200, $data);		
@@ -46,7 +49,7 @@ class User extends restful_api {
 			$id=array_pop(explode('=',$this->params));
 			$this->connection->query("delete user where id='$id'");
 			$this->response(200);		
-		}
+		 }
 	}
 
     function random_user(){

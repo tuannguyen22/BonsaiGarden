@@ -1,8 +1,9 @@
 
 
 <?php
-    require '../api/user.php';
+   require '../api/user.php';
 ?>
+
 
                 <main>
                     <div class="container-fluid">
