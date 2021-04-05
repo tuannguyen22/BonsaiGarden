@@ -105,7 +105,7 @@ CREATE TABLE cart_item (
 );
 
 
-CREATE VIEW product_view AS SELECT product.id product.name,product.subtitle, product.price,product.discount, product.quantity,product.type, product.content, image.image
+CREATE VIEW product_view AS SELECT product.id ,product.name,product.subtitle, product.price,product.discount, product.quantity,product.type, product.content, image.image
 FROM ((product 
 inner join  product_image on product_image.id_product= product.id)
 inner join  image on image.id= product_image.id_image);
