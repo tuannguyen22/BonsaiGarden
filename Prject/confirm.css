@@ -1,0 +1,10 @@
+.container{
+    padding:60px;
+    text-align:center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    height: 100vh;
+    }
+  .spacer {
+    padding: 30px 0;
+  }
