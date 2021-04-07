@@ -10,9 +10,8 @@ class Database{
         private $dbname;
         private $charset;
         private $connection;
-        private $query;
+        private $result;
         private $show_errors = TRUE;
-        private $query_closed = TRUE;
         public $query_count = 0;
     
 
@@ -34,83 +33,29 @@ class Database{
     
       
         public function query($query) {
-            if (!$this->query_closed) {
-                $this->query->close();
+     
+            try{
+               $this->result= $this->connection->query($query);
             }
-            if ($this->query = $this->connection->prepare($query)) {
-                if (func_num_args() > 1) {
-                    $x = func_get_args();
-                    $args = array_slice($x, 1);
-                    $types = '';
-                    $args_ref = array();
-                    foreach ($args as $k => &$arg) {
-                        if (is_array($args[$k])) {
-                            foreach ($args[$k] as $j => &$a) {
-                                $types .= $this->_gettype($args[$k][$j]);
-                                $args_ref[] = &$a;
-                            }
-                        } else {
-                            $types .= $this->_gettype($args[$k]);
-                            $args_ref[] = &$arg;
-                        }
-                    }
-                    array_unshift($args_ref, $types);
-                    call_user_func_array(array($this->query, 'bind_param'), $args_ref);
-                }
-                $this->query->execute();
-                   if ($this->query->errno) {
-                    $this->error('Unable to process MySQL query (check your params) - ' . $this->query->error);
-                   }
-                $this->query_closed = FALSE;
-                $this->query_count++;
-            } else {
-                $this->error('Unable to prepare MySQL statement (check your syntax) - ' . $this->connection->error);
+          
+             catch(Throwable $e) {
+                $this->error('Unable to prepare MySQL statement (check your syntax) - ' . $e);
             }
-            return $this;
+          
+            return $this->result;
         }
     
-        public function fetchAll($callback = null) {
-            $params = array();
-            $row = array();
-            $meta = $this->query->result_metadata();
-            while ($field = $meta->fetch_field()) {
-                $params[] = &$row[$field->name];
-            }
-            call_user_func_array(array($this->query, 'bind_result'), $params);
+        public function fetchAll() {
+           
             $result = array();
-            while ($this->query->fetch()) {
-                $r = array();
-                foreach ($row as $key => $val) {
-                    $r[$key] = $val;
-                }
-                if ($callback != null && is_callable($callback)) {
-                    $value = call_user_func($callback, $r);
-                    if ($value == 'break') break;
-                } else {
-                    $result[] = $r;
-                }
-            }
-            $this->query->close();
-            $this->query_closed = TRUE;
+            while ($row= $this->fetchArray()) {
+                    $result[] = $row;
+                }       
             return $result;
         }
     
-        public function fetchArray() {
-            $params = array();
-            $row = array();
-            $meta = $this->query->result_metadata();
-            while ($field = $meta->fetch_field()) {
-                $params[] = &$row[$field->name];
-            }
-            call_user_func_array(array($this->query, 'bind_result'), $params);
-            $result = array();
-            while ($this->query->fetch()) {
-                foreach ($row as $key => $val) {
-                    $result[$key] = $val;
-                }
-            }
-            $this->query->close();
-            $this->query_closed = TRUE;
+        public function fetchArray() {         
+            $result =$this->result->fetch_assoc();            
             return $result;
         }
     
@@ -118,18 +63,18 @@ class Database{
             return $this->connection->close();
         }
     
-        public function numRows() {
-            $this->query->store_result();
-            return $this->query->num_rows;
-        }
+        // public function numRows() {
+        //     $this->query->store_result();
+        //     return $this->query->num_rows;
+        // }
     
-        public function affectedRows() {
-            return $this->query->affected_rows;
-        }
+        // public function affectedRows() {
+        //     return $this->query->affected_rows;
+        // }
     
-        public function lastInsertID() {
-            return $this->connection->insert_id;
-        }
+        // public function lastInsertID() {
+        //     return $this->connection->insert_id;
+        // }
     
         public function error($error) {
             if ($this->show_errors) {

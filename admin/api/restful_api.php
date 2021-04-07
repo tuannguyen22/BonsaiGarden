@@ -19,7 +19,7 @@ class Restful_api {
     
        $this->endpoint = trim($_SERVER['PATH_INFO'],'/');
        }
-       print_r ($this->endpoint);
+      
      
        $this->params=$_SERVER['QUERY_STRING'];
     
@@ -41,10 +41,12 @@ class Restful_api {
             break;
 
             case 'PUT':
+                $this->params = $_POST;
                // $this->file = file_get_contents("php://input");
             break;
 
             case 'DELETE':
+                $this->params = $_POST;
                 // Không cần nhận, bởi params đã được lấy từ url
             break;
 
