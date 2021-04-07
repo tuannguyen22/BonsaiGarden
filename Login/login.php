@@ -3,6 +3,7 @@
 include('../Database/connect.php');
 require('../Class/class.php');
 session_start ();
+error_reporting(0);
 function Login($username,$password){
     $read = "SELECT * FROM user WHERE userName = '$username' AND password = '$password'"; 
     global $conn;

@@ -17,6 +17,15 @@
 </head>
 
 <body>
+    <?php 
+    error_reporting(0);
+    include('../Database/connect.php');
+    $latest = "SELECT * FROM product_view Order by id DESC Limit 3";
+    global $conn;
+    $result = $conn->query($latest);
+    $favourite = "SELECT * FROM product_view Order by id ASC Limit 3";
+    $fav = $conn->query($favourite);
+    ?>
     <div class="monitor">
         <header class="header">
             <div class="content-menu">
@@ -130,160 +139,85 @@
             </div>
 
             <!-- Collapsible element -->
-            <div class="collapse" id="collapse1">
+            <div class="collapse show" id="collapse1" >
                 <div class="mt-3">
-                    <div class="row">
+                    <?php 
+                    if (mysqli_num_rows($result) > 0) {
+                    ?>
+                    <div class="row" style="display:flex">
+                    <?php while($row = mysqli_fetch_assoc($result)) {
+                        ?>
                         <div class="col-md-4">
                             <figure class="card card-product">
-                                <div class="img-wrap"><img src="./Image/new1.jpg"></div>
+                                <div class="img-wrap"><img src="<?php echo $row['image'] ?>"></div>
                                 <figcaption class="info-wrap">
-                                    <h4 class="title">Another name of item</h4>
-                                    <p class="desc">Some small description goes here</p>
+                                    <h4 class="title"><?php echo $row["name"] ?></h4>
+                                    <p class="desc"><?php echo $row["subtitle"] ?></p>
                                     <div class="rating-wrap">
-                                        <div class="label-rating">132 reviews</div>
-                                        <div class="label-rating">154 orders </div>
                                     </div>
                                     <!-- rating-wrap.// -->
                                 </figcaption>
                                 <div class="bottom-wrap">
                                     <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
                                     <div class="price-wrap h5">
-                                        <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                                        <span class="price-new"><?php echo $row["price"] ?></span> <del class="price-old">$1980</del>
                                     </div>
                                     <!-- price-wrap.// -->
                                 </div>
                                 <!-- bottom-wrap.// -->
                             </figure>
                         </div>
-                        <!-- col // -->
-                        <div class="col-md-4">
-                            <figure class="card card-product">
-                                <div class="img-wrap"><img src="../Home/Image/fly-bonsai.gif"> </div>
-                                <figcaption class="info-wrap">
-                                    <h4 class="title">Good product</h4>
-                                    <p class="desc">Some small description goes here</p>
-                                    <div class="rating-wrap">
-                                        <div class="label-rating">132 reviews</div>
-                                        <div class="label-rating">154 orders </div>
-                                    </div>
-                                    <!-- rating-wrap.// -->
-                                </figcaption>
-                                <div class="bottom-wrap">
-                                    <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
-                                    <div class="price-wrap h5">
-                                        <span class="price-new">$1280</span> <del class="price-old">$1980</del>
-                                    </div>
-                                    <!-- price-wrap.// -->
-                                </div>
-                                <!-- bottom-wrap.// -->
-                            </figure>
-                        </div>
-                        <!-- col // -->
-                        <div class="col-md-4">
-                            <figure class="card card-product">
-                                <div class="img-wrap"><img src="../Home/Image/hh.jpg"></div>
-                                <figcaption class="info-wrap">
-                                    <h4 class="title">Product name goes here</h4>
-                                    <p class="desc">Some small description goes here</p>
-                                    <div class="rating-wrap">
-                                        <div class="label-rating">132 reviews</div>
-                                        <div class="label-rating">154 orders </div>
-                                    </div>
-                                    <!-- rating-wrap.// -->
-                                </figcaption>
-                                <div class="bottom-wrap">
-                                    <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
-                                    <div class="price-wrap h5">
-                                        <span class="price-new">$1280</span> <del class="price-old">$1980</del>
-                                    </div>
-                                    <!-- price-wrap.// -->
-                                </div>
-                                <!-- bottom-wrap.// -->
-                            </figure>
-                        </div>
-                        <!-- col // -->
+                        <?php
+                        } ?>
                     </div>
-                </div>
-            </div>
-            <div class="collapse" id="collapse2">
-                <div class="mt-3">
-                    <div class="mt-3">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <figure class="card card-product">
-                                    <div class="img-wrap"><img src="./Image/new1.jpg"></div>
-                                    <figcaption class="info-wrap">
-                                        <h4 class="title">Vetplanten circle</h4>
-                                        <p class="desc">Some small description goes here</p>
-                                        <div class="rating-wrap">
-                                            <div class="label-rating">132 reviews</div>
-                                            <div class="label-rating">154 orders </div>
-                                        </div>
-                                        <!-- rating-wrap.// -->
-                                    </figcaption>
-                                    <div class="bottom-wrap">
-                                        <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
-                                        <div class="price-wrap h5">
-                                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
-                                        </div>
-                                        <!-- price-wrap.// -->
-                                    </div>
-                                    <!-- bottom-wrap.// -->
-                                </figure>
-                            </div>
-                            <!-- col // -->
-                            <div class="col-md-4">
-                                <figure class="card card-product">
-                                    <div class="img-wrap"><img src="./Image/new2.jpg"> </div>
-                                    <figcaption class="info-wrap">
-                                        <h4 class="title">Good product</h4>
-                                        <p class="desc">Some small description goes here</p>
-                                        <div class="rating-wrap">
-                                            <div class="label-rating">132 reviews</div>
-                                            <div class="label-rating">154 orders </div>
-                                        </div>
-                                        <!-- rating-wrap.// -->
-                                    </figcaption>
-                                    <div class="bottom-wrap">
-                                        <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
-                                        <div class="price-wrap h5">
-                                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
-                                        </div>
-                                        <!-- price-wrap.// -->
-                                    </div>
-                                    <!-- bottom-wrap.// -->
-                                </figure>
-                            </div>
-                            <!-- col // -->
-                            <div class="col-md-4">
-                                <figure class="card card-product">
-                                    <div class="img-wrap"><img src="./Image/bac4.jpg"></div>
-                                    <figcaption class="info-wrap">
-                                        <h4 class="title">Product name goes here</h4>
-                                        <p class="desc">Some small description goes here</p>
-                                        <div class="rating-wrap">
-                                            <div class="label-rating">132 reviews</div>
-                                            <div class="label-rating">154 orders </div>
-                                        </div>
-                                        <!-- rating-wrap.// -->
-                                    </figcaption>
-                                    <div class="bottom-wrap">
-                                        <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
-                                        <div class="price-wrap h5">
-                                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
-                                        </div>
-                                        <!-- price-wrap.// -->
-                                    </div>
-                                    <!-- bottom-wrap.// -->
-                                </figure>
-                            </div>
-                            <!-- col // -->
-                        </div>
-                    </div>
+                    <?php
+                        } ?>
                 </div>
             </div>
             <!-- / Collapsible element -->
+            <div class="collapse" id="collapse2" >
+                <div class="mt-3">
+                <div class="mt-3">
+                    <?php 
+                    if (mysqli_num_rows($fav) > 0) {
+                    ?>
+                    
+                    <div class="row" style="display:flex">
+                    <?php while($row = mysqli_fetch_assoc($fav)) {
+                        ?>
+                        <div class="col-md-4">
+                            <figure class="card card-product">
+                                <div class="img-wrap"><img src="<?php echo $row['image'] ?>"></div>
+                                <figcaption class="info-wrap">
+                                    <h4 class="title"><?php echo $row["name"] ?></h4>
+                                    <p class="desc"><?php echo $row["subtitle"] ?></p>
+                                    <div class="rating-wrap">
+                                    </div>
+                                    <!-- rating-wrap.// -->
+                                </figcaption>
+                                <div class="bottom-wrap">
+                                    <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
+                                    <div class="price-wrap h5">
+                                        <span class="price-new"><?php echo $row["price"] ?></span> <del class="price-old">$1980</del>
+                                    </div>
+                                    <!-- price-wrap.// -->
+                                </div>
+                                <!-- bottom-wrap.// -->
+                            </figure>
+                        </div>
+                        <?php
+                        } ?>
+                    </div>
+                    
+                    <?php
+                        } ?>
+                    </div>
+                </div>
+            </div>
+            <!-- Container end -->
         </div>
+
+
 
         <div class="container-cardGroup">
             <h1 class="content">Indoor plants</h1>

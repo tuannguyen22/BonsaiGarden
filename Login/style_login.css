@@ -98,6 +98,15 @@ input {
     width: 100%;
 }
 
+#showPassword {
+    width: 4rem !important;
+    height: 2.5rem !important;
+    text-align: center;
+    position: relative;
+    bottom: 2.5rem;
+    left: 15.5rem;
+}
+
 .container {
     background-color: #fff;
     border-radius: 10px;
@@ -322,40 +331,6 @@ footer a {
 #errorText {
     color: red;
     font-size: 1rem;
-}
-
-
-/* Modal input info */
-
-#exModal {
-    height: 50rem !important;
-    position: relative!important;
-    z-index: 9999 !important;
-}
-
-.modal {
-    position: relative!important;
-    z-index: 1 !important;
-}
-
-.btn-outline-danger {
-    border: #016d3b !important;
-    background: #016d3b !important;
-    color: #f9faf9 !important;
-}
-
-.btn-outline-danger a {
-    color: #f9faf9;
-    text-decoration: none;
-}
-
-.btn-outline-danger a:hover {
-    color: #f9faf9;
-    text-decoration: none;
-}
-
-#content-modal-input {
-    width: 35rem !important;
 }
 
 

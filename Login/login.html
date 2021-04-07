@@ -27,7 +27,7 @@
                     <p></p>
                     <div class="form-group">
                         <label for="username">User Name:</label>
-                        <input type="text" class="form-control" id="newUsername" placeholder="User name" name="newName">
+                        <input type="text" class="form-control" id="newUsername" placeholder="User name" name="newName" pattern="[A-Za-z0-9 ]{1,50}" title="The username is just 20 characters ">
                     </div>
                     <div class="form-group">
                         <label for="newemail">Email:</label>
@@ -60,6 +60,7 @@
                     <div class="form-group">
                         <label for="pwd">Password:</label>
                         <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                        <input type="button" id="showPassword" value="show" class="button" />
                     </div>
                     <div class="checkbox">
                         <a href="">Forgot Password</a>
@@ -94,6 +95,36 @@
 
         signInButton.addEventListener('click', () => {
             container.classList.remove('right-panel-active');
+        });
+
+
+        // Check javascript has loaded
+        $(document).ready(function() {
+
+            // Click event of the showPassword button
+            $('#showPassword').on('click', function() {
+
+                // Get the password field
+                var passwordField = $('#password');
+
+                // Get the current type of the password field will be password or text
+                var passwordFieldType = passwordField.attr('type');
+
+                // Check to see if the type is a password field
+                if (passwordFieldType == 'password') {
+                    // Change the password field to text
+                    passwordField.attr('type', 'text');
+
+                    // Change the Text on the show password button to Hide
+                    $(this).val('Hide');
+                } else {
+                    // If the password field type is not a password field then set it to password
+                    passwordField.attr('type', 'password');
+
+                    // Change the value of the show password button to Show
+                    $(this).val('Show');
+                }
+            });
         });
     </script>
 

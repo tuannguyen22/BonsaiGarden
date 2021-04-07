@@ -1,6 +1,6 @@
-create database  if not exists bonsaiGarden
-use bonsaiGarden
-CREATE TABLE user (
+create database  if not exists bonsaigarden
+use bonsaigarden
+CREATE TABLE bonsaigarden.user (
   id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30),
   phone VARCHAR(12),
@@ -10,7 +10,8 @@ CREATE TABLE user (
   userName VARCHAR(30),
   password VARCHAR(30),
   address varchar(255),
-  status BOOLEAN DEFAULT TRUE
+  status BOOLEAN DEFAULT TRUE,
+  unique(userName)
 );
 CREATE TABLE country (
   country_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -41,16 +42,15 @@ CREATE TABLE address (
 
 CREATE TABLE product (
   id BIGINT NOT NULL AUTO_INCREMENT,
-  userId BIGINT NOT NULL,
-  title VARCHAR(75) NOT NULL,
+  name varchar(255) ,
+  subtitle VARCHAR(75) NOT NULL,
   summary TINYTEXT NULL,
-  type SMALLINT(6) NOT NULL DEFAULT 0,
+  type varchar(6) NOT NULL DEFAULT 0,
   price FLOAT NOT NULL DEFAULT 0,
   discount FLOAT NOT NULL DEFAULT 0,
   quantity SMALLINT(6) NOT NULL DEFAULT 0,
   content TEXT NULL DEFAULT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (userId) REFERENCES user(id) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (id)
 );
 
 Create table image (
@@ -64,14 +64,13 @@ Create table product_image(
     id_image bigint not null,
     unique (id_product,id_image),
     Foreign key (id_product) references product(id) on delete cascade on update cascade,
-     Foreign key (id_image) references image(id) on delete cascade on update cascade
+    Foreign key (id_image) references image(id) on delete cascade on update cascade
     );
     
 
 
 CREATE TABLE category (
   id BIGINT NOT NULL AUTO_INCREMENT,
-  parentId BIGINT NULL DEFAULT NULL,
   title VARCHAR(75) NOT NULL,
   content TEXT NULL DEFAULT NULL,
   PRIMARY KEY (id)
@@ -106,7 +105,48 @@ CREATE TABLE cart_item (
 );
 
 
-CREATE VIEW product_view AS SELECT product.title, product.price,product.discount, product.quantity,product.type, product.content, image.image
+CREATE VIEW product_view AS SELECT product.id ,product.name,product.subtitle, product.price,product.discount, product.quantity,product.type, product.content, image.image
 FROM ((product 
 inner join  product_image on product_image.id_product= product.id)
 inner join  image on image.id= product_image.id_image);
+
+
+
+-- User
+
+insert into user(name,phone,job_title,email,age,userName,password,address) values('long','099999999','IT','longnguyen22',10,'admin','123456','Quang Binh');
+
+
+-- Product
+insert into product(name,type,price,quantity) values('Bone Dragon','L',20000,20);
+insert into product(name,type,price,quantity) values('Pink anthurium','L',25000,60);
+insert into product(name,type,price,quantity) values('Snake Plant','L',25000,70);
+insert into product(name,type,price,quantity) values('Monstera Deliciosa','L',20000,70);
+insert into product(name,type,price,quantity) values('Golden Pothos Vine','XL',35000,70);
+insert into product(name,type,price,quantity) values('Peace Lily','X',30000,70);
+
+
+
+-- Image
+
+insert into image (image) values('https://www.whiteflowerfarm.com/mas_assets/cache/image/7/4/5/f/29791.Jpg');
+insert into image (image) values('https://blueprint-api-production.s3.amazonaws.com/uploads/card/image/1313925/819e4cb1-2c20-4b90-ad50-cc4558281ca6.png');
+insert into image (image) values('https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1551636850-gallery_the-sill_snake_laurentii_august_2230x.progressive.jpg?crop=0.752xw:0.581xh;0.223xw,0.0409xh&resize=768:*');
+insert into image (image) values('https://i.etsystatic.com/20948249/r/il/f2a5f8/2843437086/il_794xN.2843437086_pvjk.jpg');
+insert into image (image) values('https://i.etsystatic.com/21063677/r/il/df5bef/2485154742/il_794xN.2485154742_kpa5.jpg');
+insert into image (image) values('https://cdn.shopclues.com/images1/thumbnails/106360/640/1/149564155-106360635-1589345712.jpg');
+
+
+-- Image/product
+insert into product_image(id_product,id_image) values(1,1);
+insert into product_image(id_product,id_image) values(2,2);
+insert into product_image(id_product,id_image) values(3,3);
+insert into product_image(id_product,id_image) values(4,4);
+insert into product_image(id_product,id_image) values(5,5);
+insert into product_image(id_product,id_image) values(6,6);
+
+-- Cart
+
+insert into cart(userId,content) values(1,"Nguoi dung1");
+
+insert into cart_item(productId,cartId) values(1,1);

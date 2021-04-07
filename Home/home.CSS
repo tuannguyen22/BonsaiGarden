@@ -274,18 +274,19 @@ figure:hover+span {
 
 .collapse {
     width: 100%;
-    height: auto;
+    height: 20rem !important;
 }
 
 .mt-3 {
     justify-content: space-around !important;
+    width: auto;
 }
 
 .card-product .img-wrap {
     border-radius: 3px 3px 0 0;
     overflow: hidden;
     position: relative;
-    height: 220px;
+    height: 150px;
     text-align: center;
 }
 
