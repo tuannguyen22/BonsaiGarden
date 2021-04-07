@@ -11,6 +11,7 @@
 
 <body>
   <?php
+
   include('../Database/connect.php');
   session_start();
   error_reporting(0);
@@ -19,7 +20,7 @@
   {
     if ($_REQUEST['id']) {
       $id = $_REQUEST['id'];
-      //truy xuat thong tin cart du tren id user
+      //truy xuat thong tin cart du ten id user
       $read = "SELECT * FROM cart WHERE userId = '{$_SESSION['userId']}'";
       global $conn;
       $cart = $conn->query($read);
