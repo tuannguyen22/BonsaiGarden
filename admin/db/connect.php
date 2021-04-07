@@ -9,7 +9,7 @@ class Database{
         private $pass;
         private $dbname;
         private $charset;
-        private $connection;
+        public $connection;
         private $result;
         private $show_errors = TRUE;
         public $query_count = 0;

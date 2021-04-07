@@ -11,7 +11,8 @@ if ($_SESSION['login'] == "false") {
 <head>
 
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />\
+    <meta http-equiv="Cache-Control" content="no-store" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -53,7 +54,7 @@ if ($_SESSION['login'] == "false") {
                     <a class="dropdown-item" href="#">Settings</a>
                     <a class="dropdown-item" href="#">Activity Log</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="login.html">Logout</a>
+                    <a class="dropdown-item" href="login.php">Logout</a>
                 </div>
             </li>
         </ul>
@@ -87,7 +88,7 @@ if ($_SESSION['login'] == "false") {
 
                             <div class=" nav-link  collapse" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="login.html">Login</a>
+                                    <a class="nav-link" href="login.php">Login</a>
                                     <a class="nav-link" href="register.html">Register</a>
                                     <a class="nav-link" href="password.html">Forgot Password</a>
                                 </nav>
@@ -112,7 +113,7 @@ if ($_SESSION['login'] == "false") {
                             <div class=" nav-link  collapse" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <span id="user_table" class="nav-link " id="userTables" style="cursor:pointer" onclick="b()">User</span>
-                                    <span id="product_table" class="nav-link " id="productTables" style="cursor:pointer">Product</span>
+                                    <span id="product_table" class="nav-link " id="productTables" style="cursor:pointer" onclick="d()">Product</span>
 
                                 </nav>
                             </div>
@@ -233,20 +234,23 @@ if ($_SESSION['login'] == "false") {
             }
 
         );
-        const button = document.getElementById('user_table');
-      async function a(){
-          
-          let json=  await axios.get('tables.php/user')
+      
+        async function a() {
+            let json = await axios.get('tables.php/user')
 
             return json;
         }
+        async function c() {
 
-        function b(){
-           a().then((result)=>{
+let json2 = await axios.get('tables.php/product')
+
+return json2;
+}
+
+        function b() {
+            a().then((result) => {
+                let html = `               
            
-        let html =`               
-            <main>
-                    <div class="container-fluid">
                      <h1 class="mt-4">Tables</h1>
                                                  <ol class="breadcrumb mb-4">
                                                      <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
@@ -267,7 +271,7 @@ if ($_SESSION['login'] == "false") {
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
                         <thead id="table_head">
                         <tr>
                                 <th>Name</th>
@@ -291,13 +295,20 @@ if ($_SESSION['login'] == "false") {
                             </tr>
                         </tfoot>
                         <tbody id="table_body">`;
-            
 
-            data= JSON.parse(JSON.stringify(result.data)); 
-            let i=0;
-            for (i = 0; i < data.length; i++) {
-              
-    html += `<tr id='${data[i].id}'>       
+
+                 let data = JSON.parse(JSON.stringify(result.data));
+                let i = 0;
+                for (i = 0; i < data.length; i++) {
+                    let status = '';
+                    if (data[i].status == 1) {
+                        status = 'active';
+
+                    } else {
+                        status = 'block';
+                    }
+
+                    html += `<tr>       
                                 
                                     <td contenteditable='true' id='name${data[i].id}'>${data[i].name} </td>
                                     <td contenteditable='true' id='job_title${data[i].id}'>${data[i].job_title} </td>   
@@ -307,13 +318,13 @@ if ($_SESSION['login'] == "false") {
                                        <td contenteditable='true' id='phone${data[i].id}'>${data[i].phone} </td>
                                        <td contenteditable='true' id='address${data[i].id}'>${data[i].address} </td>
                                        <td><button type='button' class='btn btn-primary' onclick='update(${data[i].id})'>OK</button> 
-      <button type='button' class='btn btn-danger' onclick='delete('${data[i].id}')>Delete</button>
+      <button type='button' class='btn btn-danger' onclick='active(${data[i].id})'>${status}</button>
       </td>
 
                                 </tr>`
-}
+                }
 
-           
+
 
 
                 html += `</tbody>
@@ -321,45 +332,108 @@ if ($_SESSION['login'] == "false") {
                 </div>
             </div>
 
-        </div>
-    </div>
-        </main>
-            <footer class="py-4 bg-light mt-auto">
-             < div class="container-fluid">
-        <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted">Copyright &copy; Your Website 2020</div>
-            <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
-            </div>
-        </div>
-             </div>
-
-             </div>`;
+        </div>`
+             ;
 
                 document.getElementById('dashboard').innerHTML = html;
-                $('#dataTable').DataTable();
+                $('#dataTable2').DataTable();
 
-         
 
-        });
-}
 
-            const button2 = document.getElementById('product_table');
-            button2.addEventListener('click', async () => {
-                try {
-                    await axios.get('tables.php/product').then(response => {
-                        let table = document.getElementById('dashboard');
-                        table.innerHTML = response.data;;
-                        $('#dataTable').DataTable();
+            });
+        }
+  
+function d() {
 
-                    });
+c().then((result2) => {
 
-                } catch (err) {
-                    console.error(err);
+    let html = `               
+
+         <h1 class="mt-4">Tables</h1>
+                                     <ol class="breadcrumb mb-4">
+                                         <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                     <li class="breadcrumb-item active">Tables</li>
+             </ol>
+
+                             <div class="card mb-4">
+
+<div class="card-header">
+    <span style="cursor: pointer;" class="col-sm-6 col-md-4">
+        <i class="fas fa-table mr-1"></i>
+         "Data Table Product"
+        
+
+     
+    </span>
+
+</div>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead id="table_head">
+            <tr>
+                    <th>Name</th>
+                    <th>Subtitle</th>
+                    <th>Summary</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tfoot id="table-foot">
+                <tr>
+                    <th>Name</th>
+                    <th>Subtitle</th>
+                    <th>Summary</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+            <tbody id="table_body">`;
+          let  data1 = JSON.parse(JSON.stringify(result2.data));
+                let i = 0;
+                for (i = 0; i < data1.length; i++) {
+
+        html += `<tr>      
+                    
+                        <td contenteditable='true' id='name_pro${data1[i].id}'>${data1[i].name} </td>
+                        <td contenteditable='true' id='subtitle${data1[i].id}'>${data1[i].subtitle} </td>   
+                         <td contenteditable='true' id='summary${data1[i].id}'>${data1[i].summary} </td>  
+                         <td contenteditable='true' id='type${data1[i].id}'>${data1[i].type} </td>  
+
+                           <td contenteditable='true' id='price${data1[i].id}'>${data1[i].price} </td>
+                           <td contenteditable='true' id='discount${data1[i].id}'>${data1[i].discount} </td>
+                           <td contenteditable='true' id='quantity${data1[i].id}'>${data1[i].quantity} </td>
+
+                           <td><button type='button' class='btn btn-primary' onclick='updateProduct(${data1[i].id})'>Update</button> 
+</td>
+
+                    </tr>`;
                 }
-            })
+
+
+
+
+    html += `</tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+
+ `;
+    document.getElementById('dashboard').innerHTML = html;
+  $('#dataTable').DataTable();
+
+
+
+});
+}
         
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
@@ -371,7 +445,7 @@ if ($_SESSION['login'] == "false") {
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="assets/demo/datatables-demo.js"></script>
-            <script src="js/table.js"> </script>
+    <script src="js/table.js"> </script>
 
 </body>
 

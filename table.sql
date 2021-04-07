@@ -1,5 +1,7 @@
-create database  if not exists bonsaiGarden
-use bonsaiGarden
+
+create database  if not exists bonsaiGarden;
+use bonsaiGarden;
+
 CREATE TABLE user (
   id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30),
@@ -39,10 +41,17 @@ CREATE TABLE address (
   PRIMARY KEY (address_id),
   FOREIGN KEY (city_id) REFERENCES city (city_id) ON DELETE cascade ON UPDATE CASCADE
 );
-
+CREATE TABLE category (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  title VARCHAR(75) NOT NULL,
+  content TEXT NULL DEFAULT NULL,
+ 
+  PRIMARY KEY (id)
+);
 CREATE TABLE product (
   id BIGINT NOT NULL AUTO_INCREMENT,
   name varchar(255) ,
+  userName varchar(30),
   subtitle VARCHAR(75) NOT NULL,
   summary TINYTEXT NULL,
   type varchar(6) NOT NULL DEFAULT 0,
@@ -50,38 +59,33 @@ CREATE TABLE product (
   discount FLOAT NOT NULL DEFAULT 0,
   quantity SMALLINT(6) NOT NULL DEFAULT 0,
   content TEXT NULL DEFAULT NULL,
+	 categoryId bigint,
+FOREIGN KEY (categoryId) REFERENCES category (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   PRIMARY KEY (id)
 );
 
 Create table image (
-	id bigint primary key null auto_increment,
+id bigint primary key null auto_increment,
     image text
     );
 
 Create table product_image(
-	id int not null auto_increment primary key,
+id int not null auto_increment primary key,
     id_product bigint not null,
     id_image bigint not null,
     unique (id_product,id_image),
     Foreign key (id_product) references product(id) on delete cascade on update cascade,
     Foreign key (id_image) references image(id) on delete cascade on update cascade
     );
-    
+   CREATE TABLE Notify(
+	id bigint not null auto_increment,
+	userName varchar(30),
+	message text
+);
 
 
-CREATE TABLE category (
-  id BIGINT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(75) NOT NULL,
-  content TEXT NULL DEFAULT NULL,
-  PRIMARY KEY (id)
-);
-CREATE TABLE product_category (
-  productId BIGINT NOT NULL,
-  categoryId BIGINT NOT NULL,
-  PRIMARY KEY (productId, categoryId),
-  FOREIGN KEY (productId) REFERENCES product (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  FOREIGN KEY (categoryId) REFERENCES category (id) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
+
+
 CREATE TABLE cart (
   id BIGINT NOT NULL AUTO_INCREMENT,
   userId BIGINT NULL DEFAULT NULL,
@@ -106,30 +110,75 @@ CREATE TABLE cart_item (
 
 
 CREATE VIEW product_view AS SELECT product.id ,product.name,product.subtitle, product.price,product.discount, product.quantity,product.type, product.content, image.image
-FROM ((product 
+FROM ((product
 inner join  product_image on product_image.id_product= product.id)
 inner join  image on image.id= product_image.id_image);
 
+ALTER TABLE product ADD FULLTEXT (name, content);
+
+SELECT * from product inner join product_image
+                                ON product.id = product_image.id_product
+                                inner join image on product_image.id_image = image.id
+                                WHERE MATCH (name,content) AGAINST('Cây xanh' IN NATURAL LANGUAGE MODE);
 
 
+
+
+
+
+insert into category(title,content) values('Indoor plants','Dùng để trang trí trong nhà');
+insert into category(title,content) values('Garden plants','Dùng để trang trí ngoài vườn');
+insert into category(title,content) values('Bonsai air','Dùng để trang trí trong nhà');
+insert into category(title,content) values('Post jar','Lọ dùng để đựng hoa');
 
 
 insert into user(name,phone,job_title,email,age,userName,password,address) values('long','099999999','IT','longnguyen22',10,'admin','123456','Quang Binh');
 insert into user(name,phone,job_title,email,age,userName,password,address) values('long2','099999999','IT','longnguyen22',10,'admin2','123456','Quang Binh');
 
-insert into product(name,subtitle,summary,type,price,discount,quantity,content) values('sp1','Ban gi day','San pham nay dung de','L',20000,20.5,5,'Chuc nang san pham nay dung de');
+insert into product(name,subtitle,summary,type,price,discount,quantity,content,categoryId)
+ values('Cây xanh trong nhà','Ban gi day','San pham nay dung de','L',20000,20.5,5,'Chuc nang san pham nay dung de','1'),
+('Cây xanh ngoài vườn','Ban gi day','San pham nay dung de','L',25000,20.5,5,'Chuc nang san pham nay dung de','2'),
+('Cây xanh trong không khí','Ban gi day','San pham nay dung de','L',22000,20.5,5,'Chuc nang san pham nay dung de','3'),
+('Lọ chậu','Ban gi day','San pham nay dung de','L',150000,20.5,5,'Chuc nang san pham nay dung de','4');
 
-insert into image (image) values('/img/link.jpg');
-insert into image (image) values('/img/link2.jpg');
-insert into image (image) values('/img/link3.jpg');
+insert into product(name,subtitle,summary,type,price,discount,quantity,content,categoryId) values('Cây xanh trong nhà','Ban gi day','San pham nay dung de','L',20000,20.5,5,'Chuc nang san pham nay dung de','4');
+insert into product(name,subtitle,summary,type,price,discount,quantity,content,categoryId) values('Cây xanh trong nhà','Ban gi day','San pham nay dung de','L',20000,20.5,5,'Chuc nang san pham nay dung de','4');
+
+
+insert into image (image) values('https://thietkesanvuonviet.com/wp-content/uploads/2019/12/cay-xanh-trong-nha_216.jpg');
+insert into image (image) values('https://phgroup.com.vn/wp-content/uploads/2020/11/chau-cay-lan-y-800x800-1-800x720.jpg');
+insert into image (image) values('https://imgs.vietnamnet.vn/Images/2017/07/17/10/20170717103118-cay-canh-9-600x400.jpg');
+
+insert into image (image) values('https://lh3.googleusercontent.com/proxy/mDSNqreAytQKQaedwxVte7cYs4sD4oqvAituKgba_xBHgjpbTlmzFXxoQxpcFZLiUosghi6-9JUib-NoUUsQRd6z');
+insert into image (image) values('https://cayxanhhadong.com/wp-content/uploads/2018/01/cay-cau-vang-cay-xanh-ha-dong-600x600.jpg');
+insert into image (image) values('https://cayxanhquangninh.com/wp-content/uploads/2020/07/cay-hanh-phuc-agrico-4.jpg');
+
+insert into image (image) values('https://9xgarden.com/wp-content/uploads/2020/04/cay-khong-khi-gia-re-tphcm-9xgarden-4.jpg');
+insert into image (image) values('https://cayxanh.us/wp-content/uploads/2019/03/cay-khong-khi.jpg');
+insert into image (image) values('https://cf.shopee.vn/file/26e93f49e27be50633a7945d8e4cf61d');
+
+
+insert into image (image) values('https://quangcanhxanh.vn/wp-content/uploads/2020/07/chau-dat-nung-mau-basic-6.jpg');
+insert into image (image) values('https://kenh14cdn.com/thumb_w/600/LJ9BRCA2SwO2i2yoqIMzIMq9QI2QMI/Image/2015/04/c1-3c368.jpg');
+insert into image (image) values('https://lh3.googleusercontent.com/proxy/RcjnMP8fp0NcmaeQeLoIHTFA9sE45kMuA3U07SG1sMOFpnZMAEJPVyVTAxYHvOamlS5XgEodJf_-rs9DdMG7sveZubihqw5d_5Djbe8w6oeMS2BGKm5z1n95lGka_VoL8lmgNvM1aaqD5xEqW2j73Rzv');
+
+
 
 insert into product_image(id_product,id_image) values(1,1);
 insert into product_image(id_product,id_image) values(1,2);
 insert into product_image(id_product,id_image) values(1,3);
 
-insert into cart(userId,content) values(1,"Nguoi dung1");
+insert into product_image(id_product,id_image) values(2,4);
+insert into product_image(id_product,id_image) values(2,5);
+insert into product_image(id_product,id_image) values(2,6);
 
-insert into cart_item(productId,cartId) values(1,1);
+insert into product_image(id_product,id_image) values(3,7);
+insert into product_image(id_product,id_image) values(3,8);
+insert into product_image(id_product,id_image) values(3,9);
 
+insert into product_image(id_product,id_image) values(4,10);
+insert into product_image(id_product,id_image) values(4,11);
+insert into product_image(id_product,id_image) values(4,12);
 
+insert into product_image(id_product,id_image) values(5,12);
 
