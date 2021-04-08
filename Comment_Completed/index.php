@@ -11,10 +11,10 @@
         <form id="frm-comment">
             <div class="input-row">
                 <input type="hidden" name="comment_id" id="commentId" placeholder="Name" /> 
-                <input class="input-field" type="text" name="name" id="name" placeholder="Name" />
+                <input class="input-field" type="text" name="name" id="name" placeholder="Name" required/>
             </div>
             <div class="input-row">
-                <textarea class="input-field" type="text" name="comment" id="comment" placeholder="Add a Comment">  </textarea>
+                <textarea class="input-field" type="text" name="comment" id="comment" placeholder="Add a Comment" required>  </textarea>
             </div>
             <div>
                 <input type="button" name='add' class="btn-submit" id="submitButton" value="Post" /><div id="comment-message">Comments Added Successfully!</div>
@@ -83,7 +83,7 @@
                                 if (parent == "0")
                                 {
                                     comments = "<div class='comment-row'>"+
-                                    "<div class='comment-info'><span class='commet-row-label'><img src='profile.png' alt='' class='profile_pic'></span> <span class='posted-by' style='font-size: 20px'>" + data[i]['comment_sender_name'] + " </span> <span class='commet-row-label'>at</span> <span class='posted-at'>" + data[i]['date'] + "</span></div>" + 
+                                    "<div class='comment-info'><span class='commet-row-label'><img src='profile.png' alt='' class='profile_pic' style='width: 40px; height: 40px'></span> <span class='posted-by' style='font-size: 20px'>" + data[i]['comment_sender_name'] + " </span> <span class='commet-row-label'>at</span> <span class='posted-at'>" + data[i]['date'] + "</span></div>" + 
                                     "<div class='comment-text'>" + data[i]['comment'] + "</div>"+
                                     "<div><a class='btn-reply' onClick='postReply(" + commentId + ")'>Reply</a></div>"+
                                     "</div>";
