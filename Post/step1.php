@@ -22,9 +22,35 @@
         <h2 class="text-center">  
             Chọn danh mục đăng tin
         </h2>            
-          
+     
+  
+     
+        <form action='' class='form-inline' hidden id="district">
+       
+       <h4>Chọn Tỉnh Thành phố</h4>
+           <select id="huyen" name='huyen' class='form-control mr-sm-2 col-12 text-right' required=''>
+             
+               <option value=''>Tỉnh / Thành phố</option>
+           </select>
+           <br/>
+           <br/>
+
+       <h4>Quận / Huyện</h4>   
+       <select id="quan" name='quan' required=''class='form-control mr-sm-2 col-12 text-right' >
+           <option value=''>Quận / Huyện</option>
+       </select>
+       <br>
+       <br>  <br>
+       <br>
+       <input class='billing_address_1' name=''  type='hidden' value=''>
+       <input class='billing_address_2' name='' type='hidden' value=''>
+
+       <button   id='step2' type='button' class='text-lg-center form-control mr-sm-2 col-12 btn btn-warning' onclick='a2()'> NEXT </button>
+   </form>
           
         <form  id='form' action="post.php" enctype="multipart/form-data" class="form-inline center">
+        
+        
                  <button id="click1" class="form-control mr-sm-2 col-12 text-right"  type="button" >  <i class="fa fa-pagelines"> <input  id='check11' type="checkbox" name="cate1"> </i></button>
                  <br>    <br>
                  <button id="click2" class="form-control mr-sm-2 col-12 text-right"  type="button" >  <i class="fa fa-pagelines"> <input  id='check22' type="checkbox" name="cate2"> </i></button>
@@ -34,11 +60,10 @@
                  <button id="click4" class="form-control mr-sm-2 col-12 text-right"  type="button" >  <i class="fa fa-pagelines"> <input  id='check44' type="checkbox" name="cate4"> </i></button>
                  <br>
                  <button type="button" id="step1" class="text-lg-center form-control mr-sm-2 col-12 btn btn-warning" onclick="a()"> NEXT </button>
-                 
             </form>
             
     </div>
-    <script> 
+<script> 
 
 window.onload= init;
      var data=[]; 
@@ -58,39 +83,53 @@ function addClick(id){
 
     async function a() {
 
-            let json = await axios.get('step2.php');
-                document.getElementById('form').innerHTML='';
-                let a=  document.createElement('div').innerHTML
-                a=json.data;
-                document.getElementById('form').innerHTML=a;   
+            // let json = await axios.get('step2.php');
+            //     document.getElementById('form').innerHTML='';
+            //     let a=  document.createElement('div').innerHTML
+            //     a=json.data;
+            //     document.getElementById('form').innerHTML=a;  
+            $('#form').attr('hidden',true);
+           $('#district').removeAttr('hidden');
+
+
+                
 
         }
         
     async function a2() {
 
 let json = await axios.get('step3.php');
-    document.getElementById('form').innerHTML='';
+    document.getElementById('district').innerHTML='';
     let a=  document.createElement('div').innerHTML
     a=json.data;
-    document.getElementById('form').innerHTML=a;   
+
+    document.getElementById('district').innerHTML=a;   
+    data.push( $( "#huyen option:selected" ).val()+ $( "#quan option:selected" ).val());
+
 
 }
     async function a3() {
 
             let json = await axios.get('step4.php');
-                document.getElementById('form').innerHTML='';
+                document.getElementById('district').innerHTML='';
                 let a=  document.createElement('div').innerHTML
                 a=json.data;
-                document.getElementById('form').innerHTML=a;   
+                document.getElementById('district').innerHTML=a;  
+                data.push( $( "#quantity" ).val());
+                data.push( $( "#price" ).val());
+                data.push( $( "#content" ).val());
+                
+
+                
 
         }
 
-    </script>
+</script>
 <script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
     <script>
     
         if (address_2 = localStorage.getItem('address_2_saved')) {
-            $('select[name="calc_shipping_district"] option').each(function () {
+            $('select[name="quan"] option').each(function () {
                 if ($(this).text() == address_2) {
                     $(this).attr('selected', '')
                 }
@@ -98,19 +137,19 @@ let json = await axios.get('step3.php');
             $('input.billing_address_2').attr('value', address_2)
         }
         if (district = localStorage.getItem('district')) {
-            $('select[name="calc_shipping_district"]').html(district)
-            $('select[name="calc_shipping_district"]').on('change', function () {
+            $('select[name="quan"]').html(district)
+            $('select[name="quan"]').on('change', function () {
                 var target = $(this).children('option:selected')
                 target.attr('selected', '')
-                $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
+                $('select[name="quan"] option').not(target).removeAttr('selected')
                 address_2 = target.text()
                 $('input.billing_address_2').attr('value', address_2)
-                district = $('select[name="calc_shipping_district"]').html()
+                district = $('select[name="quan"]').html()
                 localStorage.setItem('district', district)
                 localStorage.setItem('address_2_saved', address_2)
             })
         }
-        $('select[name="calc_shipping_provinces"]').each(function () {
+        $('select[name="huyen"]').each(function () {
             var $this = $(this),
                 stc = ''
             c.forEach(function (i, e) {
@@ -118,7 +157,7 @@ let json = await axios.get('step3.php');
                 stc += '<option value=' + e + '>' + i + '</option>'
                 $this.html('<option value="">Tỉnh / Thành phố</option>' + stc)
                 if (address_1 = localStorage.getItem('address_1_saved')) {
-                    $('select[name="calc_shipping_provinces"] option').each(function () {
+                    $('select[name="huyen"] option').each(function () {
                         if ($(this).text() == address_1) {
                             $(this).attr('selected', '')
                         }
@@ -132,25 +171,25 @@ let json = await axios.get('step3.php');
                     if (r != '') {
                         arr[i].forEach(function (el) {
                             str += '<option value="' + el + '">' + el + '</option>'
-                            $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>' + str)
+                            $('select[name="quan"]').html('<option value="">Quận / Huyện</option>' + str)
                         })
                         var address_1 = $this.children('option:selected').text()
-                        var district = $('select[name="calc_shipping_district"]').html()
+                        var district = $('select[name="quan"]').html()
                         localStorage.setItem('address_1_saved', address_1)
                         localStorage.setItem('district', district)
-                        $('select[name="calc_shipping_district"]').on('change', function () {
+                        $('select[name="quan"]').on('change', function () {
                             var target = $(this).children('option:selected')
                             target.attr('selected', '')
-                            $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
+                            $('select[name="quan"] option').not(target).removeAttr('selected')
                             var address_2 = target.text()
                             $('input.billing_address_2').attr('value', address_2)
-                            district = $('select[name="calc_shipping_district"]').html()
+                            district = $('select[name="quan"]').html()
                             localStorage.setItem('district', district)
                             localStorage.setItem('address_2_saved', address_2)
                         })
                     } else {
-                        $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>')
-                        district = $('select[name="calc_shipping_district"]').html()
+                        $('select[name="quan"]').html('<option value="">Quận / Huyện</option>')
+                        district = $('select[name="quan"]').html()
                         localStorage.setItem('district', district)
                         localStorage.removeItem('address_1_saved', address_1)
                     }
