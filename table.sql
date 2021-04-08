@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
@@ -26,8 +26,8 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `address`
 --
-create database bonsaigarden;
-user bonsaigarden;
+create database if not EXISTS bonsaigarden ;
+use bonsaigarden;
 CREATE TABLE `address` (
   `address_id` smallint(5) UNSIGNED NOT NULL,
   `address` varchar(50) NOT NULL,
@@ -95,6 +95,8 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+
+
 -- Dumping data for table `category`
 --
 
@@ -144,21 +146,22 @@ CREATE TABLE `image` (
 -- Dumping data for table `image`
 --
 
-INSERT INTO `image` (`id`, `image`) VALUES
-(1, 'https://thietkesanvuonviet.com/wp-content/uploads/2019/12/cay-xanh-trong-nha_216.jpg'),
-(2, 'https://phgroup.com.vn/wp-content/uploads/2020/11/chau-cay-lan-y-800x800-1-800x720.jpg'),
-(3, 'https://imgs.vietnamnet.vn/Images/2017/07/17/10/20170717103118-cay-canh-9-600x400.jpg'),
-(4, 'https://lh3.googleusercontent.com/proxy/mDSNqreAytQKQaedwxVte7cYs4sD4oqvAituKgba_xBHgjpbTlmzFXxoQxpcFZLiUosghi6-9JUib-NoUUsQRd6z'),
-(5, 'https://cayxanhhadong.com/wp-content/uploads/2018/01/cay-cau-vang-cay-xanh-ha-dong-600x600.jpg'),
-(6, 'https://cayxanhquangninh.com/wp-content/uploads/2020/07/cay-hanh-phuc-agrico-4.jpg'),
-(7, 'https://9xgarden.com/wp-content/uploads/2020/04/cay-khong-khi-gia-re-tphcm-9xgarden-4.jpg'),
-(8, 'https://cayxanh.us/wp-content/uploads/2019/03/cay-khong-khi.jpg'),
-(9, 'https://cf.shopee.vn/file/26e93f49e27be50633a7945d8e4cf61d'),
-(10, 'https://quangcanhxanh.vn/wp-content/uploads/2020/07/chau-dat-nung-mau-basic-6.jpg'),
-(11, 'https://kenh14cdn.com/thumb_w/600/LJ9BRCA2SwO2i2yoqIMzIMq9QI2QMI/Image/2015/04/c1-3c368.jpg'),
-(12, 'https://lh3.googleusercontent.com/proxy/RcjnMP8fp0NcmaeQeLoIHTFA9sE45kMuA3U07SG1sMOFpnZMAEJPVyVTAxYHvOamlS5XgEodJf_-rs9DdMG7sveZubihqw5d_5Djbe8w6oeMS2BGKm5z1n95lGka_VoL8lmgNvM1aaqD5xEqW2j73Rzv');
+insert into image (image) values('https://thietkesanvuonviet.com/wp-content/uploads/2019/12/cay-xanh-trong-nha_216.jpg');
+insert into image (image) values('https://thietkesanvuonviet.com/wp-content/uploads/2019/12/cay-xanh-trong-nha_216.jpg');
+insert into image (image) values('https://thietkesanvuonviet.com/wp-content/uploads/2019/12/cay-xanh-trong-nha_216.jpg');
 
--- --------------------------------------------------------
+insert into image (image) values('https://cayxanhhadong.com/wp-content/uploads/2018/01/cay-cau-vang-cay-xanh-ha-dong-600x600.jpg');
+insert into image (image) values('https://cayxanhhadong.com/wp-content/uploads/2018/01/cay-cau-vang-cay-xanh-ha-dong-600x600.jpg');
+insert into image (image) values('https://cayxanhhadong.com/wp-content/uploads/2018/01/cay-cau-vang-cay-xanh-ha-dong-600x600.jpg');
+
+insert into image (image) values('https://9xgarden.com/wp-content/uploads/2020/04/cay-khong-khi-gia-re-tphcm-9xgarden-4.jpg');
+insert into image (image) values('https://9xgarden.com/wp-content/uploads/2020/04/cay-khong-khi-gia-re-tphcm-9xgarden-4.jpg');
+insert into image (image) values('https://9xgarden.com/wp-content/uploads/2020/04/cay-khong-khi-gia-re-tphcm-9xgarden-4.jpg');
+
+
+insert into image (image) values('https://quangcanhxanh.vn/wp-content/uploads/2020/07/chau-dat-nung-mau-basic-6.jpg');
+insert into image (image) values('https://kenh14cdn.com/thumb_w/600/LJ9BRCA2SwO2i2yoqIMzIMq9QI2QMI/Image/2015/04/c1-3c368.jpg');
+insert into image (image) values('https://lh3.googleusercontent.com/proxy/RcjnMP8fp0NcmaeQeLoIHTFA9sE45kMuA3U07SG1sMOFpnZMAEJPVyVTAxYHvOamlS5XgEodJf_-rs9DdMG7sveZubihqw5d_5Djbe8w6oeMS2BGKm5z1n95lGka_VoL8lmgNvM1aaqD5xEqW2j73Rzv');
 
 --
 -- Table structure for table `notify`
@@ -214,14 +217,14 @@ CREATE TABLE `product` (
 --
 -- Dumping data for table `product`
 --
+insert into product(name,subtitle,summary,type,price,discount,quantity,content,categoryId)
+ values('Cây lan ý','Ban gi day','San pham nay dung de','L',20000,20.5,5,'Chuc nang san pham nay dung de','1'),
+('Cây dừa cảnh','Ban gi day','San pham nay dung de','L',25000,20.5,5,'Chuc nang san pham nay dung de','2'),
+('Chi dứa','Ban gi day','San pham nay dung de','L',22000,20.5,5,'Chuc nang san pham nay dung de','3'),
+('Chậu đất nung','Ban gi day','San pham nay dung de','L',150000,20.5,5,'Chuc nang san pham nay dung de','4');
 
-INSERT INTO `product` (`id`, `name`, `userName`, `subtitle`, `summary`, `type`, `price`, `discount`, `quantity`, `content`, `categoryId`) VALUES
-(1, 'Cây xanh trong nhà', NULL, 'Ban gi day', 'San pham nay dung de', 'L', 20000, 20.5, 5, 'Chuc nang san pham nay dung de', 1),
-(2, 'Cây xanh ngoài vườn', NULL, 'Ban gi day', 'San pham nay dung de', 'L', 25000, 20.5, 5, 'Chuc nang san pham nay dung de', 2),
-(3, 'Cây xanh trong không khí', NULL, 'Ban gi day', 'San pham nay dung de', 'L', 22000, 20.5, 5, 'Chuc nang san pham nay dung de', 3),
-(4, 'Lọ chậu', NULL, 'Ban gi day', 'San pham nay dung de', 'L', 150000, 20.5, 5, 'Chuc nang san pham nay dung de', 4),
-(5, 'Cây xanh trong nhà', NULL, 'Ban gi day', 'San pham nay dung de', 'L', 20000, 20.5, 5, 'Chuc nang san pham nay dung de', 4),
-(6, 'Cây xanh trong nhà', NULL, 'Ban gi day', 'San pham nay dung de', 'L', 20000, 20.5, 5, 'Chuc nang san pham nay dung de', 4);
+insert into product(name,subtitle,summary,type,price,discount,quantity,content,categoryId) values('Cây lan ý','Ban gi day','San pham nay dung de','L',20000,20.5,5,'Chuc nang san pham nay dung de','4');
+insert into product(name,subtitle,summary,type,price,discount,quantity,content,categoryId) values('Cây lan ý','Ban gi day','San pham nay dung de','L',20000,20.5,5,'Chuc nang san pham nay dung de','4');
 
 -- --------------------------------------------------------
 
@@ -278,7 +281,7 @@ CREATE TABLE `product_view` (
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE bonsaigarden.`user` (
   `id` bigint(20) NOT NULL,
   `name` varchar(30) DEFAULT NULL,
   `phone` varchar(12) DEFAULT NULL,
@@ -295,7 +298,7 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `phone`, `job_title`, `email`, `age`, `userName`, `password`, `address`, `status`) VALUES
+INSERT INTO bonsaigarden.`user` (`id`, `name`, `phone`, `job_title`, `email`, `age`, `userName`, `password`, `address`, `status`) VALUES
 (1, 'long', '099999999', 'IT', 'longnguyen22', 10, 'admin', '123456', 'Quang Binh', 1),
 (2, 'long2', '099999999', 'IT', 'longnguyen22', 10, 'admin2', '123456', 'Quang Binh', 1);
 
@@ -486,7 +489,7 @@ ALTER TABLE `address`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`userId`) REFERENCES bonsaigarden.`user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `cart_item`
