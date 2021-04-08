@@ -11,8 +11,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
+  
+
+
+
     <div class="container">
         <h2 class="text-center">  
             Chọn danh mục đăng tin
@@ -80,13 +85,10 @@ let json = await axios.get('step3.php');
 
         }
 
-
     </script>
-     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'> </script>
-    <script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'>
-    </script>
-
-    <script>//<![CDATA[
+<script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
+    <script>
+    
         if (address_2 = localStorage.getItem('address_2_saved')) {
             $('select[name="calc_shipping_district"] option').each(function () {
                 if ($(this).text() == address_2) {
@@ -155,6 +157,7 @@ let json = await axios.get('step3.php');
                 })
             })
         })
+    
 </script>
 <script>
            function readURL(input) {
