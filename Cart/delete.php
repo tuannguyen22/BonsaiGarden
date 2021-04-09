@@ -10,5 +10,5 @@
             echo "Lỗi delete: " . $connect->error;
         }
     }
-    header("location:http://localhost/Bonsai_Garden/cart/cart.php");
+    header("location:cart.php");
 ?>

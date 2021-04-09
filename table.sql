@@ -1,5 +1,4 @@
-﻿DROP DATABASE bonsaigarden;
-create database  if not exists bonsaiGarden;
+﻿create database  if not exists bonsaiGarden;
 use bonsaiGarden;
 
 CREATE TABLE bonsaiGarden.user (
@@ -124,12 +123,21 @@ SELECT * from product inner join product_image
 
 
 
+CREATE TABLE `comments` (
+  `comment_id` int(11) NOT NULL,
+  `parent_comment_id` int(11) DEFAULT NULL,
+  `comment` varchar(200) NOT NULL,
+  `comment_sender_name` varchar(40) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
+);
 
-INSERT INTO `category` (`id`, `title`, `content`) VALUES
-(1, 'Indoor plants', 'Dùng để trang trí trong nhà'),
-(2, 'Garden plants', 'Dùng để trang trí ngoài vườn'),
-(3, 'Bonsai air', 'Dùng để trang trí trong nhà'),
-(4, 'Post jar', 'Lọ dùng để đựng hoa');
+
+
+INSERT INTO bonsaigarden.`category` (title, content) VALUES
+('Indoor plants', 'Dùng để trang trí trong nhà'),
+('Garden plants', 'Dùng để trang trí ngoài vườn'),
+('Bonsai air', 'Dùng để trang trí trong nhà'),
+('Post jar', 'Lọ dùng để đựng hoa');
 
 -- --------------------------------------------------------
 
@@ -175,3 +183,21 @@ INSERT INTO `cart` (`id`, `userId`, `status`, `content`) VALUES
 
 INSERT INTO `cart_item` (`id`, `productId`, `cartId`, `price`, `discount`, `quantity`, `active`, `content`) VALUES
 (2, 1, 1, 0, 0, 0, 1, NULL);
+
+insert into product_image(id_product,id_image) values(1,1);
+insert into product_image(id_product,id_image) values(1,2);
+insert into product_image(id_product,id_image) values(1,3);
+
+insert into product_image(id_product,id_image) values(2,4);
+insert into product_image(id_product,id_image) values(2,5);
+insert into product_image(id_product,id_image) values(2,6);
+
+insert into product_image(id_product,id_image) values(3,7);
+insert into product_image(id_product,id_image) values(3,8);
+insert into product_image(id_product,id_image) values(3,9);
+
+insert into product_image(id_product,id_image) values(4,10);
+insert into product_image(id_product,id_image) values(4,11);
+insert into product_image(id_product,id_image) values(4,12);
+
+insert into product_image(id_product,id_image) values(5,12);

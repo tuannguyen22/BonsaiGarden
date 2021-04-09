@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
 </head>
 
 <body>
@@ -21,6 +22,9 @@
 
 
     <div class="container">
+         
+      
+        
         <h2 class="text-center">
             Chọn danh mục đăng tin
         </h2>
@@ -49,13 +53,13 @@
 
             <!-- <button id='step2' type='button' class='text-lg-center form-control mr-sm-2 col-12 btn btn-warning' onclick='a2()'> NEXT </button> -->
 
-            <button id="click1" class="form-control mr-sm-2 col-12 text-right" type="button"> <i class="fa fa-pagelines"> <input id='check11' type="checkbox" name="cate1"> </i></button>
+            <button id="click1" class="form-control mr-sm-2 col-12 text-right" type="button"> <i class="fa fa-pagelines"> Indoor plants <input id='check11' type="checkbox" name="cate1"> </i></button>
             <br> <br>
-            <button id="click2" class="form-control mr-sm-2 col-12 text-right" type="button"> <i class="fa fa-pagelines"> <input id='check22' type="checkbox" name="cate2"> </i></button>
+            <button id="click2" class="form-control mr-sm-2 col-12 text-right" type="button"> <i class="fa fa-pagelines"> Garden plants <input id='check22' type="checkbox" name="cate2"> </i></button>
             <br> <br>
-            <button id="click3" class="form-control mr-sm-2 col-12 text-right" type="button"> <i class="fa fa-pagelines"> <input id='check33' type="checkbox" name="cate3"> </i></button>
+            <button id="click3" class="form-control mr-sm-2 col-12 text-right" type="button"> <i class="fa fa-pagelines"> Bonsai air <input id='check33' type="checkbox" name="cate3"> </i></button>
             <br> <br>
-            <button id="click4" class="form-control mr-sm-2 col-12 text-right" type="button"> <i class="fa fa-pagelines"> <input id='check44' type="checkbox" name="cate4"> </i></button>
+            <button id="click4" class="form-control mr-sm-2 col-12 text-right" type="button"> <i class="fa fa-pagelines"> Post jar<input id='check44' type="checkbox" name="cate4"> </i></button>
             <br>
             <!-- <button type="button" id="step1" class="text-lg-center form-control mr-sm-2 col-12 btn btn-warning" onclick="a()"> NEXT </button> -->
 
@@ -88,10 +92,10 @@
                         <div class="col-xs-6 col-sm-6 col-md-2 -3eNDZ">
                                     <button type="button"class="btn btn-brand btn-large">
                                         <img alt="https://static.chotot.com/storage/chotot-icons/svg/camera-icon.svg"role="presentation"src="https://static.chotot.com/storage/chotot-icons/svg/camera-icon.svg"><i>+</i>
-                                        <input  id='image' name="image" accept="image/*" type="file" multiple="" class="form-control-file" onchange="readURL(this);">
-                                            Đăng ảnh
+                                        <input  id='image' name="image" accept="image/*" type="file" multiple="" class="form-control-file" onchange="readURL(this);" >
+                                            Đăng ảnh 
                                         </button>
-                                        <img id="blah" src="#" alt="your image" hidden />    
+                                        <img id="blah" src="#" alt="your image" hidden style="max-width: 100px; max-height: 200px;" />    
 
                         </div>
                     </div>

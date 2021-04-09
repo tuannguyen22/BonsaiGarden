@@ -3,7 +3,7 @@ require '../db/connect.php';
 $connect = new Database;
 if (isset($_REQUEST['id']))
 	$id = $_REQUEST['id'];
-	$id =1;
+
 ?>
 
 <!DOCTYPE HTML>
@@ -51,22 +51,20 @@ if (isset($_REQUEST['id']))
 							<div id="products_example">
 								<div id="products">
 									<div class="slides_container">
-										<a href="#" target="_blank"><img src="images/productslide-1.jpg" alt=" " />
+										<?php
+										$sql = "select image from product_view where id = '$id'";
+										$result = $connect->query($sql);
 
-											<?php
-											$sql = "select image from product_view where id = '$id'";
-											$result = $connect->query($sql);
-
-											if (!$result) {
-												echo "Die" . $connect->error;
-												exit();
-											}
-											while ($row = $connect->fetchArray()) {
-												echo "<a href='#' target='_blank'><img src='{$row['image']}' alt='' /></a>";
-											}
+										if (!$result) {
+											echo "Die" . $connect->error;
+											exit();
+										}
+										while ($row = $connect->fetchArray()) {
+											echo "<a href='#' target='_blank'><img src='{$row['image']}' alt='' /></a>";
+										}
 
 
-											?>
+										?>
 									</div>
 									<ul class="pagination">
 
@@ -84,7 +82,6 @@ if (isset($_REQUEST['id']))
 
 
 										?>
-										<li><a href="#"><img src="images/thumbnailslide-3.jpg" alt=" " /></a></li>
 									</ul>
 								</div>
 							</div>
@@ -101,10 +98,10 @@ if (isset($_REQUEST['id']))
 							exit();
 						}
 						$row = $connect->fetchArray();
-					
+
 						if (!empty($row)) {
-							echo  	"<h2>Ten cua san pham {$row['name']} </h2>";
-							echo "<p>title cua san pham {$row['subtitle']}</p>";
+							echo  	"<h2>{$row['name']} </h2>";
+							echo "<p> {$row['subtitle']}</p>";
 							echo "<div class='price'>
 										<p>Gia: <span>{$row['price']} </span></p>
 														</div>";
@@ -150,9 +147,9 @@ if (isset($_REQUEST['id']))
 									<li><a href="#"><img src="images/rss.png" alt=""></a></li>
 								</ul>
 							</div>
-							<div class="button"><span><a href="#"> Thêm vào giỏ hàng</a></span></div>
+							<div class="button"><span><a href="../../Cart/cart.php?id=<?php echo $id?>"> Thêm vào giỏ hàng</a></span></div>
 
-							<div class="button col-sm-3"><span><a href="#"> Mua ngay</a> </span></div>
+							<div class="button "><span><a href="../../Cart/payment.php"> Mua ngay</a> </span></div>
 
 							<div class="clear"></div>
 						</div>
@@ -166,34 +163,36 @@ if (isset($_REQUEST['id']))
 							<li class="resp-tab-item resp-tab-active" aria-controls="tab_item-0" role="tab">Product
 								Details</li>
 							<li class="resp-tab-item" aria-controls="tab_item-2" role="tab">Product Reviews</li>
+							<li class="resp-tab-item" aria-controls="tab_item-3" role="tab">Comments</li>
+
 							<div class="clear"></div>
 						</ul>
 						<div class="resp-tabs-container">
 							<h2 class="resp-accordion resp-tab-active" role="tab" aria-controls="tab_item-0"><span class="resp-arrow"></span>Mieu ta san pham</h2>
 							<div class="product-desc resp-tab-content resp-tab-content-active" style="display:block" aria-labelledby="tab_item-0">
 								<p>
-									
-						<?php
-						$sql = "select content from product where id = '$id'";
-						$result =	$connect->query($sql);
-						if (!$result) {
-							echo "Die" . $connect->error;
-							exit();
-						}
-						$row = $connect->fetchArray();
-						if (empty($row)) {
-							echo  	"<p>{$row['content']} </p>";
-							
-						}
-						?>
+
+									<?php
+									$sql = "select content from product where id = '$id'";
+									$result =	$connect->query($sql);
+									if (!$result) {
+										echo "Die" . $connect->error;
+										exit();
+									}
+									$row = $connect->fetchArray();
+									if (empty($row)) {
+										echo  	"<p>{$row['content']} </p>";
+									}
+									?>
 								</p>
 
 							</div>
 
 
-							<h2 class="resp-accordion" role="tab" aria-controls="tab_item-2"><span class="resp-arrow"></span>Product Reviews</h2>
+							<h2 class="resp-accordion" role="tab" aria-controls="tab_item-2">
+								<span class="resp-arrow"></span>Product Reviews</h2>
 							<div class="review resp-tab-content" aria-labelledby="tab_item-2">
-								<h4>Lorem ipsum Review by <a href="#">Finibus Bonorum</a></h4>
+								<h4><a href="#"></a></h4>
 								<ul>
 									<li>Price :<a href="#"><img src="images/price-rating.png" alt=""></a></li>
 									<li>Value :<a href="#"><img src="images/value-rating.png" alt=""></a></li>
@@ -203,19 +202,50 @@ if (isset($_REQUEST['id']))
 								<div class="your-review">
 									<h3>How Do You Rate This Product?</h3>
 									<p>Write Your Own Review?</p>
-									<form>
-
+									<form action="../../Comment_Completed/add_comment.php">
+										<div><span><label>Enter Your User Name<span class="red">*</span></label></span>
+											<span><input type="text" value="" name="userName"></span>
+										</div>
 										<div><span><label>Summary of Your Review<span class="red">*</span></label></span>
-											<span><input type="text" value=""></span>
+											<span><input type="text" value="" name="comment_id"></span>
 										</div>
 										<div>
-											<span><label>Review<span class="red">*</span></label></span>
+											<span><label>Review<span class="red" name='comment'>*</span></label></span>
 											<span><textarea> </textarea></span>
 										</div>
 										<div>
 											<span><input type="submit" value="SUBMIT REVIEW"></span>
 										</div>
 									</form>
+								</div>
+							</div>
+							<h2 class="resp-accordion" role="tab" aria-controls="tab_item-3">
+							<span class="resp-arrow"></span>Product Reviews</h2>
+							<div class="review resp-tab-content" aria-labelledby="tab_item-3">
+								<h4><a href="#"></a></h4>
+						
+								<div class="your-review">
+							 <?php 
+		$sql = "select * from comments ";
+		$result = $connect->query($sql);
+
+		if (!$result) {
+			echo "Die" . $connect->error;
+			exit();
+		}
+		 $i=0;
+		while ($row = $connect->fetchArray()) {
+			echo "<div><span><label>"."{$row['comment_sender_name']}<span class='red'>". "{$row['comment']}"."</span></label></span>
+				<p>{$row['comment']} </p>
+				
+			</div>";
+			$i++;
+		}
+			if($i==0)  echo  "<h2> Chua co comment nao</h2>"
+
+
+										
+								?> 
 								</div>
 							</div>
 						</div>
@@ -232,7 +262,7 @@ if (isset($_REQUEST['id']))
 				</script>
 
 			</div>
-			<div class="sidebar">
+			<!-- <div class="sidebar">
 				<div class="s-main">
 					<div class="s_hdr">
 						<h2>Categories</h2>
@@ -246,7 +276,7 @@ if (isset($_REQUEST['id']))
 						</ul>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="clear"></div>
 		</div>
 	</div>

@@ -2,7 +2,7 @@
 
 <head>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="cart.css">
@@ -11,7 +11,6 @@
 
 <body>
   <?php
-
   include('../Database/connect.php');
   session_start();
   error_reporting(0);
@@ -20,7 +19,7 @@
   {
     if ($_REQUEST['id']) {
       $id = $_REQUEST['id'];
-      //truy xuat thong tin cart du ten id user
+      //truy xuat thong tin cart du tren id user
       $read = "SELECT * FROM cart WHERE userId = '{$_SESSION['userId']}'";
       global $conn;
       $cart = $conn->query($read);
@@ -36,10 +35,13 @@
     }
   }
   addCart();
-  
-  function calcul(){
 
-}
+  if (isset($_POST['submit'])) {
+    $amount = $_POST['quantity'];
+    $id = $_POST['submit'];
+    $sql = "UPDATE cart_item SET quantity = '$amount' WHERE cartId = '$id'";
+     $conn->query($sql);
+  }
 
   ?>
   <nav class="navbar navbar-expand-md">
@@ -107,16 +109,13 @@
                   </th>
                 </tr>
               </thead>
+              <form action="" method="post">
               <tbody>
                 <?php
-                // $product = "SELECT product_view.* FROM product_view
-                // INNER JOIN cart_item
-                // ON product_view.id = cart_item.productId
-                // where cart_item.cartId= (select id from cart where userId = '{$_SESSION['userId']}')"; 
 
                 $idItem = "SELECT * FROM cart_item WHERE cart_item.cartId = (select id from cart where userId ='{$_SESSION['userId']}')";
                 $result = $conn->query($idItem);
-               echo $conn->error;
+                echo $conn->error;
                 echo $result->error;
                 if (mysqli_num_rows($result) > 0) {
                   while ($row = mysqli_fetch_assoc($result)) {
@@ -129,14 +128,15 @@
                           where cart_item.cartId= (select id from cart where userId ='{$_SESSION['userId']}')";
                 $result = mysqli_query($conn, $product);
                 if (mysqli_num_rows($result) > 0) {
+                  
                   while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
                     echo "<td>" . "<img src ='{$row['image']}' width = 80px; height=80px>" . "</td>";
                     echo "<td>" . $row['name'] . "</td>";
                     echo "<td>" . $row['price'] . "</td>";
                     echo "<td>" . "<div class='buttons_added'>
-                                  <input class='minus is-form' type='button' value='-'>
-                                  <input type='number' class='input-qty' max='10' min='1' name='quantity' placeholder='1' >
+                                  <input class='minus is-form' type='button' value='-' >
+                                  <input type='number' class='input-qty' max='100' min='1' name='quantity' value='1' >
                                   <input class='plus is-form' type='button' value='+'></div>" . "</td>";
                     echo "<td>" . "<button class = 'btn m1-1 btn-outline-warning'> <a class='icon2' href = 'delete.php?id=" . $idItem . "'>Delete</a></button>" . "</td>";
                     echo "</tr>";
@@ -153,42 +153,18 @@
       </div>
 
 
-
-
       <div class="col-lg-12">
         <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
         <div class="p-4">
           <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
-          <ul class="list-unstyled mb-4">
-            <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>
-            <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
-            <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
-              <h5 class="font-weight-bold">$400.00</h5>
-            </li>
-          </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Buy now</a>
+       
+            <button name="submit" value='<?php echo $idItem ?>'  type="submit" class="btn btn-dark rounded-pill py-2 btn-block">Buy now</button>
+          </form>
         </div>
       </div>
-  <script>
-    $('input.input-qty').each(function() {
-      var $this = $(this),
-        qty = $this.parent().find('.is-form'),
-        min = Number($this.attr('min')),
-        max = Number($this.attr('max'))
-      if (min == 0) {
-        var d = 0
-      } else d = min
-      $(qty).on('click', function() {
-        if ($(this).hasClass('minus')) {
-          if (d > min) d += -1
-        } else if ($(this).hasClass('plus')) {
-          var x = Number($this.val()) + 1
-          if (x <= max) d += 1
-        }
-        $this.attr('value', d).val(d)
-      })
-    })
-    //]]>
-  </script>
+
+      <script src="../js/quantity.js"></script>
+
 </body>
 
 </html>

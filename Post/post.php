@@ -61,7 +61,7 @@ if (isset($_POST['content']))
            $sql= "insert into product(name,summary,price,quantity,categoryId)
            values('$content','$address','$price','$quantity','$id')";
            $db->query($sql);
-           $sql= "insert into image(image) values('../Home/image/$file_name')";
+           $sql= "insert into image(image) values('C:/xampp/htdocs/BonsaiGarden/Home/Image/$file_name')";
            $db->query($sql);
        
            $sql= "select max(id) as id from image ";
@@ -73,7 +73,7 @@ if (isset($_POST['content']))
            $sql= "insert into product_image(id_product,id_image  ) values('$idpro','$idimg')";
            echo "<script>alert('Dang Thanh Cong')</script>";
 
-       // header('location:../Home/home.php');
+            header('location:../Home/home.php');
            
         }
     

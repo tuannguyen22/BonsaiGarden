@@ -1,8 +1,7 @@
 <html>
-
-<?  require_once('../Database/connect.php');?>
-<?  require_once('../Search/fulltextSearch.php');?>
-
+  
+  <?  require_once('connect.php');?>
+   <?  require_once('fulltextSearch.php');?>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -16,19 +15,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
 </head>
-
 <body>
-    <?php
-    error_reporting(0);
-    include('../Database/connect.php');
-    $latest = "SELECT * FROM product_view Order by id DESC Limit 3";
-    global $conn;
-    $result = $conn->query($latest);
-    $favourite = "SELECT * FROM product_view Order by id ASC Limit 3";
-    $fav = $conn->query($favourite);
-    ?>
     <div class="monitor">
         <header class="header">
             <div class="content-menu">
@@ -36,12 +24,11 @@
                     <img src="Image/Logo.jpg" width="100px" height="100px" />
                 </div>
                 <!-- Search -->
-                <!-- Search -->
-                <form class="form-inline " method="post" action="../Search/fulltextSearch.php">
-                    <input class="form-control" name="keyword" value="<?php error_reporting(0);
-                                                                        $_POST["keyword"] ?>" id="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <button type="submit" name="search" id="search-btn" class="btn btn-outline-success my-2 my-sm-0"><i class="far fa-search"></i></button>
+                <form class="form-inline " method="post" action="fulltextSearch.php">
+                    <input class="form-control" name="keyword" value="<?php error_reporting(0); $_POST["keyword"]?>" id="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button type ="submit" name="search" id="search-btn" class="btn btn-outline-success my-2 my-sm-0"><i class="far fa-search"></i></button>
                 </form>
+
                 <!-- Menu -->
                 <div class="menu">
                     <ul class="nav">
@@ -51,58 +38,27 @@
                         <li class="nav-item">
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">CATEGORY
-                                    <span class="caret"></span></button>
+                                <span class="caret"></span></button>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                    <a class="nav-link" role="menuitem" tabindex="-1" href='../Search/display.php?category=Indoor plants'>Indoor plants</a>
-                                    <a class="nav-link" role="menuitem" tabindex="-1" href='../Search/display.php?category=Garden plants'>Garden plants</a>
-                                    <a class="nav-link" role="menuitem" tabindex="-1" href='../Search/display.php?category=Bonsai air'>Bonsai air</a>
-                                    <a class="nav-link" role="menuitem" tabindex="-1" href='../Search/display.php?category=Post jar'>Pots-Jar</a>
+                                    <a class="nav-link" role="menuitem" tabindex="-1" href='display.php?category=Indoor plants'>Indoor plants</a>
+                                    <a class="nav-link" role="menuitem" tabindex="-1" href='display.php?category=Garden plants'>Garden plants</a>
+                                    <a class="nav-link" role="menuitem" tabindex="-1" href='display.php?category=Bonsai air'>Bonsai air</a>
+                                    <a class="nav-link" role="menuitem" tabindex="-1" href='display.php?category=Post jar'>Pots-Jar</a>
                                 </ul>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link dropdown-toggle" href="../Notify_PHP/notification.php" data-toggle="dropdown" >Notification
-                              
-                                    <ul class="dropdown-menu">
-                                        <?php
-                                        if(empty($list)) echo "<h5> Bạn chưa có thông báo nào</h5>";
-                                        foreach ($list as $product_view) {
-                                            echo '<li><a href="#">' . $message . '</a></li>';
-                                        }
-                                        ?>
-                                    </ul>
-                              
-                            </a>
-                            <?php
-
-                            if (isset($_POST['Pay'])) {
-                                $sql = "INSERT INTO notify (userName, message) VALUES ('Lu', 'Co don dat hang moi')";
-                                $sql1 = "SELECT * FROM notify WHERE userName = userName";
-
-                                $result = mysqli_query($conn, $sql);
-                                $list = [];
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        $list[] = $row['message'];
-                                    }
-                                }
-                            }
-
-                            ?>
-
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../Post/step1.php">POST</a>
+                            <a class="nav-link" href="#">Notification</a>
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                    <?php echo strtoupper($_COOKIE['user']) ?>
+                                <?php echo strtoupper($_COOKIE['user'])?>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="">My Account</a>
                                     <a class="dropdown-item" href="../cart/cart.php">Cart Shoping</a>
-                                    <a class="dropdown-item" href="../Prject/index.php">Purchase Menu</a>
+                                    <a class="dropdown-item" href="#">Purchase Menu</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../Login/logout.php">Logout</a>
                                 </div>
@@ -175,85 +131,160 @@
             </div>
 
             <!-- Collapsible element -->
-            <div class="collapse show" id="collapse1">
+            <div class="collapse" id="collapse1">
                 <div class="mt-3">
-                    <?php
-                    if (mysqli_num_rows($result) > 0) {
-                    ?>
-                        <div class="row" style="display:flex">
-                            <?php while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                                <div class="col-md-4">
-                                    <figure class="card card-product">
-                                        <div class="img-wrap"><img src="<?php echo $row['image'] ?>"></div>
-                                        <figcaption class="info-wrap">
-                                            <h4 class="title"><?php echo $row["name"] ?></h4>
-                                            <p class="desc"><?php echo $row["subtitle"] ?></p>
-                                            <div class="rating-wrap">
-                                            </div>
-                                            <!-- rating-wrap.// -->
-                                        </figcaption>
-                                        <div class="bottom-wrap">
-                                            <a href="../admin/dist/details.php?id=<?php echo $row['id'] ?>" class="btn btn-sm btn-primary float-right">Order Now</a>
-                                            <div class="price-wrap h5">
-                                                <span class="price-new"><?php echo $row["price"] ?></span> <del class="price-old">$1980</del>
-                                            </div>
-                                            <!-- price-wrap.// -->
-                                        </div>
-                                        <!-- bottom-wrap.// -->
-                                    </figure>
-                                </div>
-                            <?php
-                            } ?>
-                        </div>
-                    <?php
-                    } ?>
-                </div>
-            </div>
-            <!-- / Collapsible element -->
-            <div class="collapse" id="collapse2">
-                <div class="mt-3">
-                    <div class="mt-3">
-                        <?php
-                        if (mysqli_num_rows($fav) > 0) {
-                        ?>
-
-                            <div class="row" style="display:flex">
-                                <?php while ($row = mysqli_fetch_assoc($fav)) {
-                                ?>
-                                    <div class="col-md-4">
-                                        <figure class="card card-product">
-                                            <div class="img-wrap"><img src="<?php echo $row['image'] ?>"></div>
-                                            <figcaption class="info-wrap">
-                                                <h4 class="title"><?php echo $row["name"] ?></h4>
-                                                <p class="desc"><?php echo $row["subtitle"] ?></p>
-                                                <div class="rating-wrap">
-                                                </div>
-                                                <!-- rating-wrap.// -->
-                                            </figcaption>
-                                            <div class="bottom-wrap">
-                                                <a href="../admin/dist/details.php?id=<?php echo $row['id'] ?>" class="btn btn-sm btn-primary float-right">Order Now</a>
-                                                <div class="price-wrap h5">
-                                                    <span class="price-new"><?php echo $row["price"] ?></span> <del class="price-old">$1980</del>
-                                                </div>
-                                                <!-- price-wrap.// -->
-                                            </div>
-                                            <!-- bottom-wrap.// -->
-                                        </figure>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <figure class="card card-product">
+                                <div class="img-wrap"><img src="./Image/new1.jpg"></div>
+                                <figcaption class="info-wrap">
+                                    <h4 class="title">Another name of item</h4>
+                                    <p class="desc">Some small description goes here</p>
+                                    <div class="rating-wrap">
+                                        <div class="label-rating">132 reviews</div>
+                                        <div class="label-rating">154 orders </div>
                                     </div>
-                                <?php
-                                } ?>
-                            </div>
-
-                        <?php
-                        } ?>
+                                    <!-- rating-wrap.// -->
+                                </figcaption>
+                                <div class="bottom-wrap">
+                                    <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
+                                    <div class="price-wrap h5">
+                                        <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                                    </div>
+                                    <!-- price-wrap.// -->
+                                </div>
+                                <!-- bottom-wrap.// -->
+                            </figure>
+                        </div>
+                        <!-- col // -->
+                        <div class="col-md-4">
+                            <figure class="card card-product">
+                                <div class="img-wrap"><img src="../Home/Image/fly-bonsai.gif"> </div>
+                                <figcaption class="info-wrap">
+                                    <h4 class="title">Good product</h4>
+                                    <p class="desc">Some small description goes here</p>
+                                    <div class="rating-wrap">
+                                        <div class="label-rating">132 reviews</div>
+                                        <div class="label-rating">154 orders </div>
+                                    </div>
+                                    <!-- rating-wrap.// -->
+                                </figcaption>
+                                <div class="bottom-wrap">
+                                    <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
+                                    <div class="price-wrap h5">
+                                        <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                                    </div>
+                                    <!-- price-wrap.// -->
+                                </div>
+                                <!-- bottom-wrap.// -->
+                            </figure>
+                        </div>
+                        <!-- col // -->
+                        <div class="col-md-4">
+                            <figure class="card card-product">
+                                <div class="img-wrap"><img src="../Home/Image/hh.jpg"></div>
+                                <figcaption class="info-wrap">
+                                    <h4 class="title">Product name goes here</h4>
+                                    <p class="desc">Some small description goes here</p>
+                                    <div class="rating-wrap">
+                                        <div class="label-rating">132 reviews</div>
+                                        <div class="label-rating">154 orders </div>
+                                    </div>
+                                    <!-- rating-wrap.// -->
+                                </figcaption>
+                                <div class="bottom-wrap">
+                                    <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
+                                    <div class="price-wrap h5">
+                                        <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                                    </div>
+                                    <!-- price-wrap.// -->
+                                </div>
+                                <!-- bottom-wrap.// -->
+                            </figure>
+                        </div>
+                        <!-- col // -->
                     </div>
                 </div>
             </div>
-            <!-- Container end -->
+            <div class="collapse" id="collapse2">
+                <div class="mt-3">
+                    <div class="mt-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <figure class="card card-product">
+                                    <div class="img-wrap"><img src="./Image/new1.jpg"></div>
+                                    <figcaption class="info-wrap">
+                                        <h4 class="title">Vetplanten circle</h4>
+                                        <p class="desc">Some small description goes here</p>
+                                        <div class="rating-wrap">
+                                            <div class="label-rating">132 reviews</div>
+                                            <div class="label-rating">154 orders </div>
+                                        </div>
+                                        <!-- rating-wrap.// -->
+                                    </figcaption>
+                                    <div class="bottom-wrap">
+                                        <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
+                                        <div class="price-wrap h5">
+                                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                                        </div>
+                                        <!-- price-wrap.// -->
+                                    </div>
+                                    <!-- bottom-wrap.// -->
+                                </figure>
+                            </div>
+                            <!-- col // -->
+                            <div class="col-md-4">
+                                <figure class="card card-product">
+                                    <div class="img-wrap"><img src="./Image/new2.jpg"> </div>
+                                    <figcaption class="info-wrap">
+                                        <h4 class="title">Good product</h4>
+                                        <p class="desc">Some small description goes here</p>
+                                        <div class="rating-wrap">
+                                            <div class="label-rating">132 reviews</div>
+                                            <div class="label-rating">154 orders </div>
+                                        </div>
+                                        <!-- rating-wrap.// -->
+                                    </figcaption>
+                                    <div class="bottom-wrap">
+                                        <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
+                                        <div class="price-wrap h5">
+                                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                                        </div>
+                                        <!-- price-wrap.// -->
+                                    </div>
+                                    <!-- bottom-wrap.// -->
+                                </figure>
+                            </div>
+                            <!-- col // -->
+                            <div class="col-md-4">
+                                <figure class="card card-product">
+                                    <div class="img-wrap"><img src="./Image/bac4.jpg"></div>
+                                    <figcaption class="info-wrap">
+                                        <h4 class="title">Product name goes here</h4>
+                                        <p class="desc">Some small description goes here</p>
+                                        <div class="rating-wrap">
+                                            <div class="label-rating">132 reviews</div>
+                                            <div class="label-rating">154 orders </div>
+                                        </div>
+                                        <!-- rating-wrap.// -->
+                                    </figcaption>
+                                    <div class="bottom-wrap">
+                                        <a href="" class="btn btn-sm btn-primary float-right">Order Now</a>
+                                        <div class="price-wrap h5">
+                                            <span class="price-new">$1280</span> <del class="price-old">$1980</del>
+                                        </div>
+                                        <!-- price-wrap.// -->
+                                    </div>
+                                    <!-- bottom-wrap.// -->
+                                </figure>
+                            </div>
+                            <!-- col // -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / Collapsible element -->
         </div>
-
-
 
         <div class="container-cardGroup">
             <h1 class="content">Indoor plants</h1>
@@ -301,7 +332,7 @@
         <div class="container-video">
             <video class="video" controls>
                 <source src="./Image/bonsai.mp4" type="video/mp4">
-            </video>
+              </video>
             <div class="content-video">
                 <p>Bonsai Garden is a pioneer in bringing a "green environment" to everyone. Contributing to making life easier - greener - more in harmony with the environment.</p>
                 <p> Creative green gifts are waiting for you <br>to send to relatives, loved ones and <br>partners in special occasions. </p>
@@ -322,8 +353,7 @@
                     <img class="logo-footer" src="Image/logo.jpg" alt="logo-footer" data-at2x="Image/Logo2.jpg" width="60px">
                     <p class="content-footer">
                         <strong>Bonsai Garden</strong> was born with the desire to be the connection point of each person with nature with quality, creative, pure Vietnamese products. By stopping to take care and look at green products every day, we are
-                        There will be more silence to feel more love of life, more gratitude, each of us will become more beautiful.
-                    </p>
+                        There will be more silence to feel more love of life, more gratitude, each of us will become more beautiful.</p>
 
                 </div>
                 <div class="col-md-4 col-xs-2 col-lg-4 offset-lg-1 footer-contact wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
