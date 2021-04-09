@@ -21,7 +21,7 @@
             <h4>
                 Nhập miêu tả sản phẩm
             </h4>             
-            <input type="number" class="form-control  col-12 " id="content" name="content" min="0">
+            <input type="text" class="form-control  col-12 " id="content" name="content" min="0">
             <br>
             <br>
             <br>

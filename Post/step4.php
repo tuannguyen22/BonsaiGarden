@@ -1,6 +1,6 @@
 
     
-        
+
                     <div class="col-xs-12">
                         <div class="col-xs-6 col-sm-6 col-md-2 -3eNDZ">
                                     <button type="button"class="btn btn-brand btn-large">
@@ -31,7 +31,7 @@
 
                     </div>
     
-                <button   id="step4" type="submit" class="text-lg-center form-control mr-sm-2 col-12 btn btn-warning"> ĐĂNG </button>
+                <button onclick="a4()"   id="step4" type="submit" class="text-lg-center form-control mr-sm-2 col-12 btn btn-warning"> ĐĂNG </button>
 
          
        
